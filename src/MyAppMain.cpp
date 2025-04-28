@@ -86,21 +86,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgum
         windowClass.lpszClassName,
         title.c_str(),
         style,
-        x,
-        y,
-        w,
-        h,
+        x, y,
+        w, h,
         nullptr,
         nullptr,
         hInstance,
         nullptr);
 
-    auto rect = RECT{};
-    GetWindowRect(hwnd, &rect);
-
-    auto app = lysa::Application::createApplication(applicationConfig);
     try {
-        // app->onInit();
+        auto app = lysa::Application{applicationConfig};
+
         ShowWindow(hwnd, nCmdShow);
         auto msg = MSG{};
         while (msg.message != WM_QUIT) {
@@ -109,12 +104,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgum
                 DispatchMessage(&msg);
             }
         }
-        // app->onDestroy();
         return static_cast<char>(msg.wParam);
-    } catch (vireo::Exception e) {
+    } catch (vireo::Exception& e) {
         MessageBoxA(nullptr, e.what(), "Fatal error", MB_OK);
         return 1;
     }
-
-    return 0;
 }
