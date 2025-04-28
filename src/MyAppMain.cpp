@@ -5,6 +5,7 @@ import vireo;
 
 lysa::SurfaceConfig surfaceConfig {
     .backend = vireo::Backend::VULKAN,
+    // .backend = vireo::Backend::DIRECTX,
     .msaa = vireo::MSAA::X4,
 };
 
