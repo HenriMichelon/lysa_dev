@@ -95,10 +95,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgum
 
     try {
         auto app = lysa::Application{applicationConfig};
-
+        auto surface = app.createSurface(surfaceConfig, hwnd);
         ShowWindow(hwnd, nCmdShow);
         auto msg = MSG{};
         while (msg.message != WM_QUIT) {
+            surface->drawFrame();
             if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
