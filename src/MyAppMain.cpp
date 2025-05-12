@@ -29,7 +29,11 @@ bool dirExists(const std::string& dirName_in) {
 }
 
 LRESULT CALLBACK WindowProc(const HWND hWnd, const UINT message, const WPARAM wParam, const LPARAM lParam) {
+    auto* surface = reinterpret_cast<lysa::Surface*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
     switch (message) {
+    case WM_SIZE:
+        surface->resize();
+        return 0;
     case WM_CLOSE:
         PostQuitMessage(0);
         return 0;
@@ -127,6 +131,7 @@ int WINAPI WinMain(const HINSTANCE hInstance, const HINSTANCE, const LPSTR, cons
     try {
         const auto app = lysa::Application{applicationConfig};
         const auto surface = app.createSurface(surfaceConfig, hwnd);
+        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(surface.get()));
         ShowWindow(hwnd, nShowCmd);
         auto msg = MSG{};
         while (msg.message != WM_QUIT) {
