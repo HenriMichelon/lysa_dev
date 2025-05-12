@@ -40,7 +40,10 @@ include(cmake/libraries.cmake)
 #######################################################
 add_subdirectory(${LYSA_PROJECT_DIR} external_lib_build)
 set(LYSA_INCLUDE_DIR ${LYSA_PROJECT_DIR}/include)
+set(LYSA_SRC_DIR ${LYSA_PROJECT_DIR}/src)
 set(LYSA_TARGET "lysa")
+set(LYSA_TARGET_SHADERS "lysa_shaders")
+set(LYSA_SHADERS_BUILD_DIR ${LYSA_PROJECT_DIR}/shaders)
 
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -55,6 +58,13 @@ file(GLOB_RECURSE SHADERS_SOURCE_FILES
         "${SHADERS_SRC_DIR}/*.slang"
 )
 add_shaders(shaders ${SHADERS_BUILD_DIR} ${SHADERS_INCLUDE_DIR} ${SHADERS_SOURCE_FILES} )
+add_custom_target(shaders_copy
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${LYSA_SHADERS_BUILD_DIR}
+        ${SHADERS_BUILD_DIR}
+        COMMENT "Copying Lysa shaders"
+        VERBATIM
+)
 
 #######################################################
 # Common files
@@ -77,7 +87,7 @@ function(build_target TARGET_NAME SRCS MODULES)
     compile_options(${TARGET_NAME})
     target_include_directories(${TARGET_NAME} PUBLIC ${INCLUDE_DIR} ${LYSA_INCLUDE_DIR})
     target_link_libraries(${TARGET_NAME} ${LYSA_TARGET} glm::glm glm-modules std-cxx-modules)
-    add_dependencies(${TARGET_NAME} ${LYSA_TARGET})
+    add_dependencies(${TARGET_NAME} ${LYSA_TARGET} shaders_copy)
     if(WIN32)
         target_precompile_headers(${TARGET_NAME} PRIVATE
                 "<windows.h>"
