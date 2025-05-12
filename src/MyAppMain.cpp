@@ -1,12 +1,11 @@
-#include <windows.h>
-
 import lysa;
 import vireo;
+import glm;
 
 lysa::SurfaceConfig surfaceConfig {
     .backend = vireo::Backend::VULKAN,
     // .backend = vireo::Backend::DIRECTX,
-    .msaa = vireo::MSAA::X4,
+    .clearColor = glm::vec3{0.0f, 0.2f, 0.4f}
 };
 
 lysa::ApplicationConfig applicationConfig {
@@ -18,6 +17,11 @@ lysa::ApplicationConfig applicationConfig {
 
 constexpr auto WIDTH{1280};
 constexpr auto HEIGHT{720};
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#ifdef _WIN32
+#include <windows.h>
 
 bool dirExists(const std::string& dirName_in) {
     const DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
@@ -34,7 +38,23 @@ LRESULT CALLBACK WindowProc(const HWND hWnd, const UINT message, const WPARAM wP
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgument, int nCmdShow) {
+struct MonitorEnumData {
+    int  enumIndex{0};
+    int  monitorIndex{0};
+    RECT monitorRect{};
+};
+
+BOOL CALLBACK MonitorEnumProc(HMONITOR, HDC , const LPRECT lprcMonitor, const LPARAM dwData) {
+    const auto data = reinterpret_cast<MonitorEnumData*>(dwData);
+    if (data->enumIndex == data->monitorIndex) {
+        data->monitorRect = *lprcMonitor;
+        return FALSE;
+    }
+    data->enumIndex++;
+    return TRUE;
+}
+
+int WINAPI WinMain(const HINSTANCE hInstance, const HINSTANCE, const LPSTR, const int nShowCmd) {
     if (!dirExists("shaders")) {
         MessageBox(nullptr,
                    L"Shaders directory not found, please run the application from the root of the project",
@@ -68,11 +88,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgum
     if (w == 0 || h == 0) {
         exStyle = WS_EX_APPWINDOW;
         style = WS_POPUP | WS_MAXIMIZE;
-        // EnumDisplayMonitors(nullptr, nullptr, MonitorEnumProc, reinterpret_cast<LPARAM>(&monitorData));
-        // w = monitorData.monitorRect.right - monitorData.monitorRect.left;
-        // h = monitorData.monitorRect.bottom - monitorData.monitorRect.top;
-        // x = monitorData.monitorRect.left;
-        // y = monitorData.monitorRect.top;
+        auto monitorRect = RECT{};
+        const auto hPrimary = MonitorFromWindow(nullptr, MONITOR_DEFAULTTOPRIMARY);
+        auto monitorInfo = MONITORINFOEX{};
+        monitorInfo.cbSize = sizeof(MONITORINFOEX);
+        if (GetMonitorInfo(hPrimary, &monitorInfo)) {
+            monitorRect = monitorInfo.rcMonitor;
+        } else {
+            auto monitorData = MonitorEnumData {};
+            EnumDisplayMonitors(nullptr, nullptr, MonitorEnumProc, reinterpret_cast<LPARAM>(&monitorData));
+            monitorRect = monitorData.monitorRect;
+        }
+        w = monitorRect.right - monitorRect.left;
+        h = monitorRect.bottom - monitorRect.top;
+        x = monitorRect.left;
+        y = monitorRect.top;
     } else {
         style = WS_OVERLAPPEDWINDOW;
         exStyle = 0;
@@ -95,9 +125,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgum
         nullptr);
 
     try {
-        auto app = lysa::Application{applicationConfig};
-        auto surface = app.createSurface(surfaceConfig, hwnd);
-        ShowWindow(hwnd, nCmdShow);
+        const auto app = lysa::Application{applicationConfig};
+        const auto surface = app.createSurface(surfaceConfig, hwnd);
+        ShowWindow(hwnd, nShowCmd);
         auto msg = MSG{};
         while (msg.message != WM_QUIT) {
             surface->drawFrame();
@@ -112,3 +142,4 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszArgum
         return 1;
     }
 }
+#endif
