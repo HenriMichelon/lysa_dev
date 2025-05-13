@@ -108,6 +108,7 @@ endfunction()
 #######################################################
 set(MY_TARGET_SRC
         ${SRC_DIR}/MyApp.cpp
-        ${SRC_DIR}/MyAppMain.cpp)
-set(MY_TARGET_MODULES ${SRC_DIR}/MyApp.ixx)
-build_target(myapp "${MY_TARGET_SRC}" ${MY_TARGET_MODULES})
+        ${SRC_DIR}/MainScene.cpp)
+set(MY_TARGET_MODULES
+        ${SRC_DIR}/MainScene.ixx)
+build_target(myapp "${MY_TARGET_SRC}" "${MY_TARGET_MODULES}")
