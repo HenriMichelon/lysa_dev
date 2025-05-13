@@ -86,7 +86,7 @@ function(build_target TARGET_NAME SRCS MODULES)
     )
     compile_options(${TARGET_NAME})
     target_include_directories(${TARGET_NAME} PUBLIC ${INCLUDE_DIR} ${LYSA_INCLUDE_DIR})
-    target_link_libraries(${TARGET_NAME} ${LYSA_TARGET} glm::glm glm-modules std-cxx-modules)
+    target_link_libraries(${TARGET_NAME} ${LYSA_TARGET} Eigen3::Eigen std-cxx-modules)
     add_dependencies(${TARGET_NAME} ${LYSA_TARGET} shaders_copy)
     if(WIN32)
         target_precompile_headers(${TARGET_NAME} PRIVATE
