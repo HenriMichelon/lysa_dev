@@ -45,7 +45,6 @@ namespace app {
         triangle1 = make_shared<lysa::MeshInstance>(mesh1, L"Triangle 1");
         triangle1->setPosition(1.0f, 0.0f, 0.0f);
         addChild(triangle1);
-
     }
 
 }

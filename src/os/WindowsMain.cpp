@@ -6,7 +6,7 @@ bool dirExists(const std::string& dirName_in) {
 }
 
 LRESULT CALLBACK WindowProc(const HWND hWnd, const UINT message, const WPARAM wParam, const LPARAM lParam) {
-    auto* surface = reinterpret_cast<lysa::Surface*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+    const auto* surface = reinterpret_cast<lysa::Surface*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
     switch (message) {
     case WM_SIZE:
         surface->resize();
