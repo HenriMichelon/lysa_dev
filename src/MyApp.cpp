@@ -4,7 +4,7 @@ import vireo;
 import main_scene;
 
 namespace app {
-    lysa::SurfaceConfig surfaceConfig {
+    lysa::WindowConfig surfaceConfig {
         .rootNode = std::make_shared<MainScene>(),
         .backend = vireo::Backend::VULKAN,
         // .backend = vireo::Backend::DIRECTX,
