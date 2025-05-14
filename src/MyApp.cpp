@@ -1,5 +1,4 @@
 import std;
-import glm;
 import lysa;
 import vireo;
 import main_scene;
@@ -9,7 +8,7 @@ namespace app {
         .rootNode = std::make_shared<MainScene>(),
         .backend = vireo::Backend::VULKAN,
         // .backend = vireo::Backend::DIRECTX,
-        .clearColor = glm::vec3{0.0f, 0.2f, 0.4f}
+        .clearColor = lysa::float3{0.0f, 0.2f, 0.4f}
     };
 
     lysa::ApplicationConfig applicationConfig {
