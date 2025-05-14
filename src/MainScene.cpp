@@ -21,7 +21,9 @@ namespace app {
         // Index-based surface for the first triangle
         const std::vector surfaces1{
             std::make_shared<lysa::MeshSurface>(0, indices.size())
-    };
+        };
+        // Mesh for the first triangle
+        auto mesh1 = std::make_shared<lysa::Mesh>(vertices, indices, surfaces1);
     }
 
 }
