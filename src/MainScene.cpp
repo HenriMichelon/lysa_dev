@@ -1,6 +1,6 @@
 module main_scene;
 
-import std;
+import lysa;
 
 namespace app {
 
@@ -18,12 +18,30 @@ namespace app {
             1,
             2
         };
+
         // Index-based surface for the first triangle
-        const std::vector surfaces1{
+        const std::vector surface1{
             std::make_shared<lysa::MeshSurface>(0, indices.size())
         };
+
         // Mesh for the first triangle
-        auto mesh1 = std::make_shared<lysa::Mesh>(vertices, indices, surfaces1);
+        auto mesh1 = std::make_shared<lysa::Mesh>(vertices, indices, surface1);
+
+        // Standard material for the first triangle
+        // With only a color and alpha transparency enabled
+        material1 = std::make_shared<lysa::StandardMaterial>();
+        material1->setAlbedoColor({0.75, 0.75, 0.75, 0.75});
+        material1->setTransparency(lysa::Transparency::ALPHA);
+        material1->setCullMode(vireo::CullMode::NONE);
+
+        // We apply the material to the unique surface
+        mesh1->setSurfaceMaterial(0, material1);
+
+        // Create, place and add the Node to the scene
+        triangle1 = make_shared<lysa::MeshInstance>(mesh1, L"Triangle 1");
+        triangle1->setPosition(1.0f, 0.0f, 0.0f);
+        addChild(triangle1);
+
     }
 
 }
