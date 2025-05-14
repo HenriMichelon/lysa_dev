@@ -8,6 +8,10 @@ namespace app {
         std::cout << "Hello" << std::endl;
         getSurface()->addPostprocessing(L"gamma_correction", &gammaCorrectionData, sizeof(gammaCorrectionData));
 
+        const auto camera = std::make_shared<lysa::Camera>();
+        camera->setPosition(0.0f, 0.0f, 2.0f);
+        addChild(camera);
+
         const std::vector<lysa::Vertex> vertices{
                 {.position = {0.0, 0.5, 0.0}, .uv = {0.5, 0.25}},
                 {.position = {0.5, -0.5, 0.0}, .uv = {0.75, 0.75}},
