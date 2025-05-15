@@ -7,6 +7,7 @@ export namespace app {
     class MainScene : public lysa::Node {
     public:
         void onReady() override;
+        void onPhysicsProcess(float delta) override;
 
     private:
         struct {

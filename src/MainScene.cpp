@@ -64,8 +64,15 @@ namespace app {
         mesh2->setSurfaceMaterial(0, material1);
         // Create, place and add the Node to the scene
         triangle2 = std::make_shared<lysa::MeshInstance>(mesh2, L"Triangle 2");
-        triangle2->setPosition({-1.0, 0.0, 0.0});
+        triangle2->setPosition(-1.0, 0.0, 0.0);
         addChild(triangle2);
+    }
+
+    void MainScene::onPhysicsProcess(const float delta) {
+        auto pos = triangle2->getPosition();
+        // std::cout << pos.x << std::endl;
+        triangle2->setPosition(pos.x - 0.1 * delta, 0.0, 0.0);
+        // triangle2->setPosition(-1.5, 0.0, 0.0);
     }
 
 }
