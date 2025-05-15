@@ -9,6 +9,7 @@ namespace app {
         getWindow()->addPostprocessing(L"gamma_correction", &gammaCorrectionData, sizeof(gammaCorrectionData));
 
         const auto camera = std::make_shared<lysa::Camera>();
+        camera->setFov(lysa::radians(lysa::float1{75.0f}));
         camera->setPosition(0.0f, 0.0f, 2.0f);
         addChild(camera);
 
