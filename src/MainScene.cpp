@@ -29,7 +29,7 @@ namespace app {
         };
 
         // Mesh for the first triangle
-        auto mesh1 = std::make_shared<lysa::Mesh>(vertices, indices, surface1);
+        auto mesh1 = std::make_shared<lysa::Mesh>(vertices, indices, surface1, L"Triangle 1");
 
         // Standard material for the first triangle
         // With only a color and alpha transparency enabled
