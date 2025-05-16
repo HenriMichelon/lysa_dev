@@ -12,6 +12,8 @@ namespace app {
         camera->setPosition(0.0f, 0.0f, 2.0f);
         addChild(camera);
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Define triangle datas
         const std::vector<lysa::Vertex> vertices{
             // First triangle
             {.position = {0.0, 0.5, 0.0}, .uv = {0.5, 0.25}},
@@ -25,18 +27,14 @@ namespace app {
         const std::vector<uint32_t> indices{
             0, 1, 2,
         };
+        // Upload triangles datas into VRAM
         const auto vireo = getWindow()->getVireo();
         const auto vertexBuffer = vireo->createBuffer(vireo::BufferType::VERTEX, sizeof(lysa::Vertex), vertices.size());
         const auto indexBuffer = vireo->createBuffer(vireo::BufferType::INDEX, sizeof(uint32_t), indices.size());
-        const auto allocator = vireo->createCommandAllocator(vireo::CommandType::GRAPHIC);
-        const auto commandList = allocator->createCommandList();
-        commandList->begin();
-        commandList->upload(vertexBuffer, vertices.data());
-        commandList->upload(indexBuffer, indices.data());
-        commandList->end();
-        getWindow()->getGraphicQueue()->submit({commandList});
-        getWindow()->getGraphicQueue()->waitIdle();
-        commandList->cleanup();
+        getWindow()->upload( {
+            { vertexBuffer, vertices.data() },
+            { indexBuffer, indices.data() },
+        });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // Index-based surface for the first triangle
