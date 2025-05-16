@@ -22,6 +22,18 @@ namespace app {
             1,
             2
         };
+        const auto vireo = getWindow()->getVireo();
+        const auto vertexBuffer = vireo->createBuffer(vireo::BufferType::VERTEX, sizeof(lysa::Vertex), vertices.size());
+        const auto indexBuffer = vireo->createBuffer(vireo::BufferType::INDEX, sizeof(uint32_t), indices.size());
+        const auto allocator = vireo->createCommandAllocator(vireo::CommandType::GRAPHIC);
+        const auto commandList = allocator->createCommandList();
+        commandList->begin();
+        commandList->upload(vertexBuffer, vertices.data());
+        commandList->upload(indexBuffer, indices.data());
+        commandList->end();
+        getWindow()->getGraphicQueue()->submit({commandList});
+        getWindow()->getGraphicQueue()->waitIdle();
+        commandList->cleanup();
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // Index-based surface for the first triangle
@@ -29,7 +41,16 @@ namespace app {
             std::make_shared<lysa::MeshSurface>(0, indices.size())
         };
         // Mesh for the first triangle
-        auto mesh1 = std::make_shared<lysa::Mesh>(vertices, indices, surface1, L"Triangle 1");
+        // auto mesh1 = std::make_shared<lysa::Mesh>(vertices, indices, surface1, L"Triangle 1");
+        auto mesh1 = std::make_shared<lysa::Mesh>(
+            vertices,
+            indices,
+            surface1,
+            0,
+            0,
+            vertexBuffer,
+            indexBuffer,
+            L"Triangle 1");
         // Standard material for the first triangle
         // With only a color and alpha transparency enabled
         material1 = std::make_shared<lysa::StandardMaterial>();
@@ -43,14 +64,22 @@ namespace app {
         triangle1->setPosition(1.0f, 0.0f, 0.0f);
         addChild(triangle1);
 
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // Index-based surface for the second triangle
         const std::vector surfaces2{
             std::make_shared<lysa::MeshSurface>(0, indices.size())
         };
         // Mesh for the second triangle
-        auto mesh2 = std::make_shared<lysa::Mesh>(vertices, indices, surfaces2);
+        // auto mesh2 = std::make_shared<lysa::Mesh>(vertices, indices, surfaces2);
+        auto mesh2 = std::make_shared<lysa::Mesh>(
+           vertices,
+           indices,
+           surfaces2,
+           0,
+           0,
+           vertexBuffer,
+           indexBuffer,
+           L"Triangle 2");
         // Shader-based material for the second triangle
         // With a fragment shader, a vertex shader and alpha transparency enabled
         // material2 = make_shared<ShaderMaterial>(
