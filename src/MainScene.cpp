@@ -29,8 +29,8 @@ namespace app {
         };
         // Upload triangles datas into VRAM
         const auto vireo = getWindow()->getVireo();
-        const auto vertexBuffer = vireo->createBuffer(vireo::BufferType::VERTEX, sizeof(lysa::Vertex), vertices.size());
-        const auto indexBuffer = vireo->createBuffer(vireo::BufferType::INDEX, sizeof(uint32_t), indices.size());
+        const auto vertexBuffer = vireo->createBuffer(vireo::BufferType::VERTEX, sizeof(lysa::Vertex), vertices.size(), L"Triangles");
+        const auto indexBuffer = vireo->createBuffer(vireo::BufferType::INDEX, sizeof(uint32_t), indices.size(), L"Triangles");
         getWindow()->upload( {
             { vertexBuffer, vertices.data() },
             { indexBuffer, indices.data() },
@@ -77,7 +77,7 @@ namespace app {
            indices,
            surfaces2,
            0,
-           indices.size() * sizeof(lysa::Vertex),
+           indices.size(),
            vertexBuffer,
            indexBuffer,
            L"Triangle 2");
