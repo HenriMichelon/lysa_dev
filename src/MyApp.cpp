@@ -9,6 +9,10 @@ namespace app {
             // .backend = vireo::Backend::DIRECTX,
             .presentMode = vireo::PresentMode::IMMEDIATE,
             .clearColor = lysa::float3{0.0f, 0.2f, 0.4f},
+            .memoryConfig = {
+                .maxMeshSurfacePerBufferCount = 1000,
+                .maxMaterialCount = 100
+            }
         }
     };
 

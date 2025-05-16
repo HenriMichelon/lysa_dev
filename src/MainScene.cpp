@@ -104,9 +104,7 @@ namespace app {
 
     void MainScene::onPhysicsProcess(const float delta) {
         auto pos = triangle2->getPosition();
-        // std::cout << pos.x << std::endl;
         triangle2->setPosition(pos.x - 0.1 * delta, 0.0, 0.0);
-        // triangle2->setPosition(-1.5, 0.0, 0.0);
     }
 
 }
