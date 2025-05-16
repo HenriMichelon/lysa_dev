@@ -45,7 +45,7 @@ int WINAPI WinMain(const HINSTANCE hInstance, const HINSTANCE, const LPSTR, cons
     }
 
     std::wstring title{L"LysaGame"};
-    if (app::surfaceConfig.backend == vireo::Backend::VULKAN) {
+    if (app::surfaceConfig.renderingConfig.backend == vireo::Backend::VULKAN) {
         title.append(L" (Vulkan)");
     } else {
         title.append(L" (DirectX)");
