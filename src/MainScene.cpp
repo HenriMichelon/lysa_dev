@@ -33,7 +33,7 @@ namespace app {
         // Standard material for the first triangle
         // With only a color and alpha transparency enabled
         material1 = std::make_shared<lysa::StandardMaterial>();
-        material1->setAlbedoColor({0.75, 0.75, 0.75, 1.0});
+        material1->setAlbedoColor({0., 1.0, 0., 1.0});
         material1->setTransparency(lysa::Transparency::ALPHA);
         material1->setCullMode(vireo::CullMode::NONE);
         // We apply the material to the unique surface
@@ -62,7 +62,7 @@ namespace app {
         // material2->setParameter(1, vec4{0.0f}); // parameter for the vertex shader
         // We apply the material to the unique surface
         material2 = std::make_shared<lysa::StandardMaterial>();
-        material2->setAlbedoColor({0.75, 0.5, 0.2, 0.5});
+        material2->setAlbedoColor({1.0, 0.0, 0.0, 1.0});
         material2->setTransparency(lysa::Transparency::ALPHA);
         material2->setCullMode(vireo::CullMode::NONE);
         mesh2->setSurfaceMaterial(0, material2);
