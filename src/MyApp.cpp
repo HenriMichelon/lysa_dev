@@ -2,7 +2,7 @@ import lysa;
 import main_scene;
 
 namespace app {
-    lysa::WindowConfig surfaceConfig {
+    lysa::WindowConfiguration surfaceConfig {
         .rootNode = std::make_shared<MainScene>(),
         .renderingConfig = {
             .backend = vireo::Backend::VULKAN,
@@ -10,9 +10,6 @@ namespace app {
             .presentMode = vireo::PresentMode::IMMEDIATE,
             .clearColor = lysa::float3{0.0f, 0.2f, 0.4f},
         }
-    };
-
-    lysa::ApplicationConfig applicationConfig {
     };
 
     constexpr auto WIDTH{1280};

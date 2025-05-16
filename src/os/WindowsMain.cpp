@@ -106,8 +106,8 @@ int WINAPI WinMain(const HINSTANCE hInstance, const HINSTANCE, const LPSTR, cons
         nullptr);
 
     try {
-        const auto app = lysa::Application{app::applicationConfig};
-        const auto surface = app.createSurface(app::surfaceConfig, hwnd);
+        const auto app = lysa::Application{};
+        const auto surface = app.createWindow(app::surfaceConfig, hwnd);
         SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(surface.get()));
         ShowWindow(hwnd, nShowCmd);
         auto msg = MSG{};
