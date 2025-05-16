@@ -13,14 +13,17 @@ namespace app {
         addChild(camera);
 
         const std::vector<lysa::Vertex> vertices{
-                {.position = {0.0, 0.5, 0.0}, .uv = {0.5, 0.25}},
-                {.position = {0.5, -0.5, 0.0}, .uv = {0.75, 0.75}},
-                {.position = {-0.5, -0.5, 0.0f}, .uv = {0.25, 0.75}},
+            // First triangle
+            {.position = {0.0, 0.5, 0.0}, .uv = {0.5, 0.25}},
+            {.position = {0.5, -0.5, 0.0}, .uv = {0.75, 0.75}},
+            {.position = {-0.5, -0.5, 0.0f}, .uv = {0.25, 0.75}},
+            // Second triangle
+            {.position = {0.0, -0.5, 0.0}, .uv = {0.5, 0.75}},
+            {.position = {0.5, 0.5, 0.0}, .uv = {0.75, 0.25}},
+            {.position = {-0.5, 0.5, 0.0f}, .uv = {0.25, 0.25}},
         };
         const std::vector<uint32_t> indices{
-            0,
-            1,
-            2
+            0, 1, 2,
         };
         const auto vireo = getWindow()->getVireo();
         const auto vertexBuffer = vireo->createBuffer(vireo::BufferType::VERTEX, sizeof(lysa::Vertex), vertices.size());
@@ -60,7 +63,7 @@ namespace app {
         // We apply the material to the unique surface
         mesh1->setSurfaceMaterial(0, material1);
         // Create, place and add the Node to the scene
-        triangle1 = make_shared<lysa::MeshInstance>(mesh1, L"Triangle 1");
+        triangle1 = std::make_shared<lysa::MeshInstance>(mesh1, L"Triangle 1");
         triangle1->setPosition(1.0f, 0.0f, 0.0f);
         addChild(triangle1);
 
@@ -76,7 +79,7 @@ namespace app {
            indices,
            surfaces2,
            0,
-           0,
+           indices.size() * sizeof(lysa::Vertex),
            vertexBuffer,
            indexBuffer,
            L"Triangle 2");
