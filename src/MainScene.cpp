@@ -27,12 +27,24 @@ namespace app {
         const std::vector<uint32_t> indices{
             0, 1, 2,
         };
+
+        vertexArray = std::make_shared<lysa::MemoryArray>(
+            getWindow()->getVireo(),
+            sizeof(lysa::Vertex),
+            6,
+            6,
+            vireo::BufferType::VERTEX,
+            L"Vertices");
+        const auto bloc1 = vertexArray->alloc(vertices.size()/2);
+        const auto bloc2 = vertexArray->alloc(vertices.size()/2);
+        vertexArray->write(bloc1, &vertices[0]);
+        vertexArray->write(bloc2, &vertices[3]);
+        getWindow()->upload(*vertexArray);
+
         // Upload triangles datas into VRAM
         const auto vireo = getWindow()->getVireo();
-        const auto vertexBuffer = vireo->createBuffer(vireo::BufferType::VERTEX, sizeof(lysa::Vertex), vertices.size(), L"Triangles");
         const auto indexBuffer = vireo->createBuffer(vireo::BufferType::INDEX, sizeof(uint32_t), indices.size(), L"Triangles");
         getWindow()->upload( {
-            { vertexBuffer, vertices.data() },
             { indexBuffer, indices.data() },
         });
 
@@ -49,7 +61,7 @@ namespace app {
             surface1,
             0,
             0,
-            vertexBuffer,
+            vertexArray->getBuffer(),
             indexBuffer,
             L"Triangle 1");
         // Standard material for the first triangle
@@ -77,8 +89,8 @@ namespace app {
            indices,
            surfaces2,
            0,
-           indices.size(),
-           vertexBuffer,
+           3,
+           vertexArray->getBuffer(),
            indexBuffer,
            L"Triangle 2");
         // Shader-based material for the second triangle
@@ -103,8 +115,8 @@ namespace app {
     }
 
     void MainScene::onPhysicsProcess(const float delta) {
-        auto pos = triangle2->getPosition();
-        triangle2->setPosition(pos.x - 0.1 * delta, 0.0, 0.0);
+        // auto pos = triangle2->getPosition();
+        // triangle2->setPosition(pos.x - 0.1 * delta, 0.0, 0.0);
     }
 
 }

@@ -14,6 +14,8 @@ export namespace app {
             float gamma{2.4f};
         } gammaCorrectionData;
 
+        std::shared_ptr<lysa::MemoryArray> vertexArray;
+
         std::shared_ptr<lysa::MeshInstance>     triangle1; // right triangle
         std::shared_ptr<lysa::MeshInstance>     triangle2; // left triangle
         std::shared_ptr<lysa::StandardMaterial> material1; // material for the right triangle
