@@ -31,22 +31,25 @@ namespace app {
         vertexArray = std::make_shared<lysa::MemoryArray>(
             getWindow()->getVireo(),
             sizeof(lysa::Vertex),
-            6,
-            6,
+            vertices.size(),
+            vertices.size(),
             vireo::BufferType::VERTEX,
             L"Vertices");
-        const auto bloc1 = vertexArray->alloc(vertices.size()/2);
-        const auto bloc2 = vertexArray->alloc(vertices.size()/2);
+        const auto bloc1 = vertexArray->alloc(vertices.size());
         vertexArray->write(bloc1, &vertices[0]);
-        vertexArray->write(bloc2, &vertices[3]);
         getWindow()->upload(*vertexArray);
 
-        // Upload triangles datas into VRAM
-        const auto vireo = getWindow()->getVireo();
-        const auto indexBuffer = vireo->createBuffer(vireo::BufferType::INDEX, sizeof(uint32_t), indices.size(), L"Triangles");
-        getWindow()->upload( {
-            { indexBuffer, indices.data() },
-        });
+        indexArray = std::make_shared<lysa::MemoryArray>(
+            getWindow()->getVireo(),
+            sizeof(uint32_t),
+            indices.size(),
+            indices.size(),
+            vireo::BufferType::INDEX,
+            L"Indices");
+        const auto bloc2 = indexArray->alloc(indices.size());
+        indexArray->write(bloc2, &indices[0]);
+        getWindow()->upload(*indexArray);
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // Index-based surface for the first triangle
@@ -62,7 +65,7 @@ namespace app {
             0,
             0,
             vertexArray->getBuffer(),
-            indexBuffer,
+            indexArray->getBuffer(),
             L"Triangle 1");
         // Standard material for the first triangle
         // With only a color and alpha transparency enabled
@@ -91,7 +94,7 @@ namespace app {
            0,
            3,
            vertexArray->getBuffer(),
-           indexBuffer,
+           indexArray->getBuffer(),
            L"Triangle 2");
         // Shader-based material for the second triangle
         // With a fragment shader, a vertex shader and alpha transparency enabled
