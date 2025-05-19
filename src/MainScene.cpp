@@ -28,27 +28,27 @@ namespace app {
             0, 1, 2,
         };
 
-        vertexArray = std::make_shared<lysa::MemoryArray>(
-            getWindow()->getVireo(),
-            sizeof(lysa::Vertex),
-            vertices.size(),
-            vertices.size(),
-            vireo::BufferType::VERTEX,
-            L"Vertices");
-        const auto bloc1 = vertexArray->alloc(vertices.size());
-        vertexArray->write(bloc1, &vertices[0]);
-        getWindow()->upload(*vertexArray);
-
-        indexArray = std::make_shared<lysa::MemoryArray>(
-            getWindow()->getVireo(),
-            sizeof(uint32_t),
-            indices.size(),
-            indices.size(),
-            vireo::BufferType::INDEX,
-            L"Indices");
-        const auto bloc2 = indexArray->alloc(indices.size());
-        indexArray->write(bloc2, &indices[0]);
-        getWindow()->upload(*indexArray);
+        // vertexArray = std::make_shared<lysa::MemoryArray>(
+        //     getWindow()->getVireo(),
+        //     sizeof(lysa::Vertex),
+        //     vertices.size(),
+        //     vertices.size(),
+        //     vireo::BufferType::VERTEX,
+        //     L"Vertices");
+        // const auto bloc1 = vertexArray->alloc(vertices.size());
+        // vertexArray->write(bloc1, &vertices[0]);
+        // getWindow()->upload(*vertexArray);
+        //
+        // indexArray = std::make_shared<lysa::MemoryArray>(
+        //     getWindow()->getVireo(),
+        //     sizeof(uint32_t),
+        //     indices.size(),
+        //     indices.size(),
+        //     vireo::BufferType::INDEX,
+        //     L"Indices");
+        // const auto bloc2 = indexArray->alloc(indices.size());
+        // indexArray->write(bloc2, &indices[0]);
+        // getWindow()->upload(*indexArray);
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,16 +57,16 @@ namespace app {
             std::make_shared<lysa::MeshSurface>(0, indices.size())
         };
         // Mesh for the first triangle
-        // auto mesh1 = std::make_shared<lysa::Mesh>(vertices, indices, surface1, L"Triangle 1");
-        auto mesh1 = std::make_shared<lysa::Mesh>(
-            vertices,
-            indices,
-            surface1,
-            0,
-            0,
-            vertexArray->getBuffer(),
-            indexArray->getBuffer(),
-            L"Triangle 1");
+        auto mesh1 = std::make_shared<lysa::Mesh>(vertices, indices, surface1, L"Triangle 1");
+        // auto mesh1 = std::make_shared<lysa::Mesh>(
+            // vertices,
+            // indices,
+            // surface1,
+            // 0,
+            // 0,
+            // vertexArray->getBuffer(),
+            // indexArray->getBuffer(),
+            // L"Triangle 1");
         // Standard material for the first triangle
         // With only a color and alpha transparency enabled
         material1 = std::make_shared<lysa::StandardMaterial>();
@@ -86,16 +86,16 @@ namespace app {
             std::make_shared<lysa::MeshSurface>(0, indices.size())
         };
         // Mesh for the second triangle
-        // auto mesh2 = std::make_shared<lysa::Mesh>(vertices, indices, surfaces2);
-        auto mesh2 = std::make_shared<lysa::Mesh>(
-           vertices,
-           indices,
-           surfaces2,
-           0,
-           3,
-           vertexArray->getBuffer(),
-           indexArray->getBuffer(),
-           L"Triangle 2");
+        auto mesh2 = std::make_shared<lysa::Mesh>(vertices, indices, surfaces2);
+        // auto mesh2 = std::make_shared<lysa::Mesh>(
+           // vertices,
+           // indices,
+           // surfaces2,
+           // 0,
+           // 3,
+           // vertexArray->getBuffer(),
+           // indexArray->getBuffer(),
+           // L"Triangle 2");
         // Shader-based material for the second triangle
         // With a fragment shader, a vertex shader and alpha transparency enabled
         // material2 = make_shared<ShaderMaterial>(

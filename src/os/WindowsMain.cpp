@@ -45,7 +45,7 @@ int WINAPI WinMain(const HINSTANCE hInstance, const HINSTANCE, const LPSTR, cons
     }
 
     std::wstring title{L"LysaGame"};
-    if (app::surfaceConfig.renderingConfig.backend == vireo::Backend::VULKAN) {
+    if (app::appConfig.backend == vireo::Backend::VULKAN) {
         title.append(L" (Vulkan)");
     } else {
         title.append(L" (DirectX)");
@@ -106,8 +106,8 @@ int WINAPI WinMain(const HINSTANCE hInstance, const HINSTANCE, const LPSTR, cons
         nullptr);
 
     try {
-        const auto app = lysa::Application{};
-        const auto surface = app.createWindow(app::surfaceConfig, hwnd);
+        const auto app = lysa::Application{app::appConfig};
+        const auto surface = app.createWindow(app::windowConfig, hwnd);
         SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(surface.get()));
         ShowWindow(hwnd, nShowCmd);
         auto msg = MSG{};
