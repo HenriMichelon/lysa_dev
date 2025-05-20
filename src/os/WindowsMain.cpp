@@ -107,12 +107,12 @@ int WINAPI WinMain(const HINSTANCE hInstance, const HINSTANCE, const LPSTR, cons
 
     try {
         const auto app = lysa::Application{app::appConfig};
-        auto surface = lysa::Window{app::windowConfig, hwnd};
-        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(&surface));
+        auto window = lysa::Window{app::windowConfig, hwnd};
+        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(&window));
         ShowWindow(hwnd, nShowCmd);
         auto msg = MSG{};
         while (msg.message != WM_QUIT) {
-            surface.drawFrame();
+            window.drawFrame();
             if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
