@@ -14,11 +14,13 @@ namespace app {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // Define triangle datas
-        const std::vector<lysa::Vertex> vertices{
+        const std::vector<lysa::Vertex> vertices1{
             // First triangle
             {.position = {0.0, 0.5, 0.0}, .uv = {0.5, 0.25}},
             {.position = {0.5, -0.5, 0.0}, .uv = {0.75, 0.75}},
             {.position = {-0.5, -0.5, 0.0f}, .uv = {0.25, 0.75}},
+        };
+        const std::vector<lysa::Vertex> vertices2{
             // Second triangle
             {.position = {0.0, -0.5, 0.0}, .uv = {0.5, 0.75}},
             {.position = {0.5, 0.5, 0.0}, .uv = {0.75, 0.25}},
@@ -57,7 +59,7 @@ namespace app {
             std::make_shared<lysa::MeshSurface>(0, indices.size())
         };
         // Mesh for the first triangle
-        auto mesh1 = std::make_shared<lysa::Mesh>(vertices, indices, surface1, L"Triangle 1");
+        auto mesh1 = std::make_shared<lysa::Mesh>(vertices1, indices, surface1, L"Triangle 1");
         // auto mesh1 = std::make_shared<lysa::Mesh>(
             // vertices,
             // indices,
@@ -86,7 +88,7 @@ namespace app {
             std::make_shared<lysa::MeshSurface>(0, indices.size())
         };
         // Mesh for the second triangle
-        auto mesh2 = std::make_shared<lysa::Mesh>(vertices, indices, surfaces2);
+        auto mesh2 = std::make_shared<lysa::Mesh>(vertices2, indices, surfaces2);
         // auto mesh2 = std::make_shared<lysa::Mesh>(
            // vertices,
            // indices,
