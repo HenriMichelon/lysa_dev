@@ -6,11 +6,6 @@ namespace app {
     lysa::ApplicationConfiguration appConfig {
         .backend = vireo::Backend::VULKAN,
         // .backend = vireo::Backend::DIRECTX,
-        .resourcesConfig = {
-            .maxVertexInstances = 1000,
-            .maxIndexInstances = 1500,
-            .maxMaterialInstances = 100
-        }
     };
 
     lysa::WindowConfiguration windowConfig {
