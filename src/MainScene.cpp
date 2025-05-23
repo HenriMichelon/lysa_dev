@@ -120,8 +120,10 @@ namespace app {
     }
 
     void MainScene::onPhysicsProcess(const float delta) {
-        auto pos = triangle2->getPosition();
+        const auto pos = triangle2->getPosition();
         triangle2->setPosition(pos.x - 0.1 * delta, 0.0, 0.0);
+        const auto color = material2->getAlbedoColor();
+        material2->setAlbedoColor({color.r - 0.1 * delta, color.g, color.b, color.a});
     }
 
 }
