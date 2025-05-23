@@ -120,8 +120,8 @@ namespace app {
     }
 
     void MainScene::onPhysicsProcess(const float delta) {
-        // auto pos = triangle2->getPosition();
-        // triangle2->setPosition(pos.x - 0.1 * delta, 0.0, 0.0);
+        auto pos = triangle2->getPosition();
+        triangle2->setPosition(pos.x - 0.1 * delta, 0.0, 0.0);
     }
 
 }
