@@ -108,6 +108,7 @@ int WINAPI WinMain(const HINSTANCE hInstance, const HINSTANCE, const LPSTR, cons
     try {
         const auto app = lysa::Application{app::appConfig};
         auto window = lysa::Window{app::windowConfig, hwnd};
+        window.getViewport().setRootNode(std::make_shared<app::MainScene>());
         SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(&window));
         ShowWindow(hwnd, nShowCmd);
         auto msg = MSG{};
