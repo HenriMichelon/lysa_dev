@@ -4,8 +4,8 @@ import main_scene;
 namespace app {
 
     lysa::ApplicationConfiguration appConfig {
-        .backend = vireo::Backend::VULKAN,
-        // .backend = vireo::Backend::DIRECTX,
+        // .backend = vireo::Backend::VULKAN,
+        .backend = vireo::Backend::DIRECTX,
     };
 
     lysa::WindowConfiguration windowConfig {
@@ -17,8 +17,31 @@ namespace app {
         },
     };
 
+    class MyWindow : public lysa::Window {
+    public:
+        MyWindow(void* windowHandle) :
+        Window{windowConfig, windowHandle, std::make_shared<MainScene>()} {
+
+        }
+    };
+
+    class MyApp : public lysa::Application {
+    public:
+        MyApp(void* windowHandle) :
+            Application{appConfig},
+            window{std::make_shared<MyWindow>(windowHandle)} {
+            addWindow(window);
+        }
+
+        auto& getWindow() { return window; }
+
+    private:
+        std::shared_ptr<lysa::Window> window;
+    };
+
     constexpr auto WIDTH{1280};
     constexpr auto HEIGHT{720};
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

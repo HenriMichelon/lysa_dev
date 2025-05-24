@@ -106,19 +106,19 @@ int WINAPI WinMain(const HINSTANCE hInstance, const HINSTANCE, const LPSTR, cons
         nullptr);
 
     try {
-        const auto app = lysa::Application{app::appConfig};
-        auto window = lysa::Window{app::windowConfig, hwnd};
-        window.getViewport().setRootNode(std::make_shared<app::MainScene>());
-        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(&window));
+        auto app = app::MyApp{hwnd};
+        app.onReady();
+        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(app.getWindow().get()));
         ShowWindow(hwnd, nShowCmd);
         auto msg = MSG{};
         while (msg.message != WM_QUIT) {
-            window.drawFrame();
+            app.drawFrame();
             if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
             }
         }
+        app.onQuit();
         return static_cast<char>(msg.wParam);
     } catch (vireo::Exception& e) {
         MessageBoxA(nullptr, e.what(), "Fatal error", MB_OK);
