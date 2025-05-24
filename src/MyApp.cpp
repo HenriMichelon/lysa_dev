@@ -17,11 +17,21 @@ namespace app {
         },
     };
 
+    lysa::ViewportConfiguration viewport2Config{
+        .viewport = {
+            .x = 0,
+            .y = 0,
+            .width = 400,
+            .height = 200,
+        }
+    };
+
     class MyWindow : public lysa::Window {
     public:
         MyWindow(void* windowHandle) :
         Window{windowConfig, windowHandle, std::make_shared<MainScene>()} {
-
+            addViewport(std::make_shared<lysa::Viewport>(viewport2Config))
+            ->setRootNode(std::make_shared<MainScene>());
         }
     };
 
