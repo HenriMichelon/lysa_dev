@@ -39,25 +39,25 @@ include(cmake/libraries.cmake)
 
 #######################################################
 add_subdirectory(${LYSA_PROJECT_DIR} external_lib_build)
-set(LYSA_INCLUDE_DIR ${LYSA_PROJECT_DIR}/include)
-set(LYSA_SRC_DIR ${LYSA_PROJECT_DIR}/src)
 set(LYSA_TARGET "lysa")
+set(LYSA_SRC_DIR ${LYSA_PROJECT_DIR}/src)
 set(LYSA_TARGET_SHADERS "lysa_shaders")
 set(LYSA_SHADERS_BUILD_DIR ${LYSA_PROJECT_DIR}/shaders)
+set(LYSA_SHADERS_INCLUDE_DIR ${LYSA_PROJECT_DIR}/src/lysa/shaders)
 
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(SHADERS_SRC_DIR ${SRC_DIR}/shaders)
-set(SHADERS_INCLUDE_DIR ${SRC_DIR}/shaders/include)
+set(SHADERS_INCLUDE_DIR ${SRC_DIR}/shaders)
 set(SHADERS_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/shaders)
 
 #######################################################
 # Slang shaders
 file(MAKE_DIRECTORY ${SHADERS_BUILD_DIR})
-file(GLOB_RECURSE SHADERS_SOURCE_FILES
-        "${SHADERS_SRC_DIR}/*.slang"
+set(SHADERS_SOURCE_FILES
+        "${SHADERS_SRC_DIR}/triangle.frag.slang"
 )
-add_shaders(shaders ${SHADERS_BUILD_DIR} ${SHADERS_INCLUDE_DIR} ${SHADERS_SOURCE_FILES} )
+compile_shaders(shaders ${SHADERS_BUILD_DIR} ${SHADERS_INCLUDE_DIR} ${LYSA_SHADERS_INCLUDE_DIR} ${SHADERS_SOURCE_FILES})
 add_custom_target(shaders_copy
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${LYSA_SHADERS_BUILD_DIR}
