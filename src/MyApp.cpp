@@ -31,9 +31,9 @@ namespace app {
     public:
         MyWindow() :
         Window{windowConfig, std::make_shared<MainScene>()} {
-            viewport2Config.viewport.x = (getExtent().width - viewport2Config.viewport.width)/2;
-            addViewport(std::make_shared<lysa::Viewport>(viewport2Config))
-               ->setRootNode(std::make_shared<MainScene>());
+            // viewport2Config.viewport.x = (getExtent().width - viewport2Config.viewport.width)/2;
+            // addViewport(std::make_shared<lysa::Viewport>(viewport2Config))
+               // ->setRootNode(std::make_shared<MainScene>());
         }
     };
 
@@ -52,11 +52,34 @@ namespace app {
                 title.append(L" (DirectX)");
             }
             windowConfig.title = title;
-            windowConfig.x = 100;
+            // windowConfig.x = 100;
             addWindow(std::make_shared<MyWindow>());
 
-            windowConfig.x = 950;
-            addWindow(std::make_shared<MyWindow>());
+            // windowConfig.x = 950;
+            // addWindow(std::make_shared<MyWindow>());
+
+            if constexpr (vireo::isMemoryUsageEnabled()) {
+                size_t totalBuffers{0};
+                for (const auto& usage : vireo::Buffer::getMemoryAllocations()) {
+                    // std::cout
+                    //     << "Buffer : "
+                    //     << usage.size << " bytes (" << usage.size/1024/1024 << "Mb)"
+                    //     << ", " << std::to_string(usage.name) << ""
+                    //     << std::endl;
+                    totalBuffers += usage.size;
+                }
+                size_t totalImages{0};
+                for (const auto& usage : vireo::Image::getMemoryAllocations()) {
+                    // std::cout
+                    //     << "Image : "
+                    //     << usage.size << " bytes (" << usage.size/1024/1024 << "Mb)"
+                    //     << ", " << std::to_string(usage.name) << ""
+                    //     << std::endl;
+                    totalImages += usage.size;
+                }
+                std::cout << "Buffers : " << totalBuffers << " bytes (" << totalBuffers/1024/1024 << "Mb)" << std::endl;
+                std::cout << "Images: " << totalImages << " bytes (" << totalImages/1024/1024 << "Mb)" << std::endl;
+            }
         }
     };
 
