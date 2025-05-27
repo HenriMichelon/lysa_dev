@@ -30,29 +30,6 @@ namespace app {
             0, 1, 2,
         };
 
-        // vertexArray = std::make_shared<lysa::MemoryArray>(
-        //     getWindow()->getVireo(),
-        //     sizeof(lysa::Vertex),
-        //     vertices.size(),
-        //     vertices.size(),
-        //     vireo::BufferType::VERTEX,
-        //     L"Vertices");
-        // const auto bloc1 = vertexArray->alloc(vertices.size());
-        // vertexArray->write(bloc1, &vertices[0]);
-        // getWindow()->upload(*vertexArray);
-        //
-        // indexArray = std::make_shared<lysa::MemoryArray>(
-        //     getWindow()->getVireo(),
-        //     sizeof(uint32_t),
-        //     indices.size(),
-        //     indices.size(),
-        //     vireo::BufferType::INDEX,
-        //     L"Indices");
-        // const auto bloc2 = indexArray->alloc(indices.size());
-        // indexArray->write(bloc2, &indices[0]);
-        // getWindow()->upload(*indexArray);
-
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // Index-based surface for the first triangle
         const std::vector surface1{
@@ -60,15 +37,6 @@ namespace app {
         };
         // Mesh for the first triangle
         auto mesh1 = std::make_shared<lysa::Mesh>(vertices1, indices, surface1, L"Triangle 1");
-        // auto mesh1 = std::make_shared<lysa::Mesh>(
-            // vertices,
-            // indices,
-            // surface1,
-            // 0,
-            // 0,
-            // vertexArray->getBuffer(),
-            // indexArray->getBuffer(),
-            // L"Triangle 1");
         // Standard material for the first triangle
         // With only a color and alpha transparency enabled
         material1 = std::make_shared<lysa::StandardMaterial>();
@@ -89,30 +57,17 @@ namespace app {
         };
         // Mesh for the second triangle
         auto mesh2 = std::make_shared<lysa::Mesh>(vertices2, indices, surfaces2);
-        // auto mesh2 = std::make_shared<lysa::Mesh>(
-           // vertices,
-           // indices,
-           // surfaces2,
-           // 0,
-           // 3,
-           // vertexArray->getBuffer(),
-           // indexArray->getBuffer(),
-           // L"Triangle 2");
         // Shader-based material for the second triangle
         // With a fragment shader, a vertex shader and alpha transparency enabled
-        // material2 = make_shared<ShaderMaterial>(
-        //         "examples/uv_gradient.frag",
+        material2 = std::make_shared<lysa::ShaderMaterial>(
+            L"examples/uv_gradient.frag");
         //         "examples/scale.vert");
-        // material2->setTransparency(Transparency::ALPHA);
-        // material2->setCullMode(CullMode::DISABLED);
-        // material2->setParameter(0, vec4{0.0f}); // parameter for the fragment shader
-        // material2->setParameter(1, vec4{0.0f}); // parameter for the vertex shader
-        // We apply the material to the unique surface
-        material2 = std::make_shared<lysa::StandardMaterial>();
-        material2->setAlbedoColor({1.0, 0.0, 0.0, 1.0});
         material2->setTransparency(lysa::Transparency::ALPHA);
         material2->setCullMode(vireo::CullMode::NONE);
-        mesh2->setSurfaceMaterial(0, material2);
+        material2->setParameter(0, lysa::float4{0.0f}); // parameter for the fragment shader
+        material2->setParameter(1, lysa::float4{0.0f}); // parameter for the vertex shader
+        // We apply the material to the unique surface
+        mesh2->setSurfaceMaterial(0, material1);
         // Create, place and add the Node to the scene
         triangle2 = std::make_shared<lysa::MeshInstance>(mesh2, L"Triangle 2");
         triangle2->setPosition(-1.0, 0.0, 0.0);
@@ -120,10 +75,10 @@ namespace app {
     }
 
     void MainScene::onPhysicsProcess(const float delta) {
-        const auto pos = triangle2->getPosition();
-        triangle2->setPosition(pos.x - 0.1 * delta, 0.0, 0.0);
-        const auto color = material2->getAlbedoColor();
-        material2->setAlbedoColor({color.r - 0.1 * delta, color.g, color.b, color.a});
+        // const auto pos = triangle2->getPosition();
+        // triangle2->setPosition(pos.x - 0.1 * delta, 0.0, 0.0);
+        // const auto color = material2->getAlbedoColor();
+        // material2->setAlbedoColor({color.r - 0.1 * delta, color.g, color.b, color.a});
     }
 
 }
