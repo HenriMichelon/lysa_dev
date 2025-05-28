@@ -1,4 +1,5 @@
 import lysa;
+import scene.add_remove;
 import scene.triangles;
 
 namespace app {
@@ -30,7 +31,7 @@ namespace app {
     class MyWindow : public lysa::Window {
     public:
         MyWindow() :
-        Window{windowConfig, std::make_shared<TrianglesScene>()} {
+        Window{windowConfig, std::make_shared<AddRemoveNodeScene>()} {
             viewport2Config.viewport.x = (getExtent().width - viewport2Config.viewport.width)/2;
             // addViewport(std::make_shared<lysa::Viewport>(viewport2Config))
                // ->setRootNode(std::make_shared<TrianglesScene>());

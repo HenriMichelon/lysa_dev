@@ -110,7 +110,10 @@ endfunction()
 #######################################################
 set(MY_TARGET_SRC
         ${SRC_DIR}/MyApp.cpp
+        ${SRC_DIR}/scenes/AddRemoveNode.cpp
         ${SRC_DIR}/scenes/TrianglesScene.cpp)
 set(MY_TARGET_MODULES
+        ${SRC_DIR}/scenes/AddRemoveNode.ixx
+        ${SRC_DIR}/scenes/BaseScene.ixx
         ${SRC_DIR}/scenes/TrianglesScene.ixx)
 build_target(myapp "${MY_TARGET_SRC}" "${MY_TARGET_MODULES}")

@@ -1,10 +1,11 @@
 export module scene.triangles;
 
 import lysa;
+import scene.base;
 
 export namespace app {
 
-    class TrianglesScene : public lysa::Node {
+    class TrianglesScene : public BaseScene {
     public:
         void onReady() override;
 
