@@ -67,7 +67,7 @@ namespace app {
         material2->setParameter(0, lysa::float4{0.0f}); // parameter for the fragment shader
         material2->setParameter(1, lysa::float4{0.0f}); // parameter for the vertex shader
         // We apply the material to the unique surface
-        mesh2->setSurfaceMaterial(0, material1);
+        mesh2->setSurfaceMaterial(0, material2);
         // Create, place and add the Node to the scene
         triangle2 = std::make_shared<lysa::MeshInstance>(mesh2, L"Triangle 2");
         triangle2->setPosition(-1.0, 0.0, 0.0);
