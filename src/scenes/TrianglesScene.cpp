@@ -1,10 +1,10 @@
-module main_scene;
+module scene.triangles;
 
 import lysa;
 
 namespace app {
 
-    void MainScene::onReady() {
+    void TrianglesScene::onReady() {
         std::cout << "Hello" << std::endl;
         getViewport()->getWindow().addPostprocessing(L"gamma_correction", &gammaCorrectionData, sizeof(gammaCorrectionData));
 
@@ -60,8 +60,8 @@ namespace app {
         // Shader-based material for the second triangle
         // With a fragment shader, a vertex shader and alpha transparency enabled
         material2 = std::make_shared<lysa::ShaderMaterial>(
-            L"triangle.frag");
-        //         "examples/scale.vert");
+            L"uv_gradient.frag",
+            L"scale.vert");
         material2->setTransparency(lysa::Transparency::ALPHA);
         material2->setCullMode(vireo::CullMode::NONE);
         material2->setParameter(0, lysa::float4{0.0f}); // parameter for the fragment shader
@@ -74,7 +74,7 @@ namespace app {
         addChild(triangle2);
     }
 
-    void MainScene::onPhysicsProcess(const float delta) {
+    void TrianglesScene::onPhysicsProcess(const float delta) {
         // Rotate the color gradient used by the fragment shader
         gradient += gradientSpeed * delta;
         // Ensure the color gradient remains within the range [0, 1]

@@ -1,10 +1,10 @@
-export module main_scene;
+export module scene.triangles;
 
 import lysa;
 
 export namespace app {
 
-    class MainScene : public lysa::Node {
+    class TrianglesScene : public lysa::Node {
     public:
         void onReady() override;
         void onPhysicsProcess(float delta) override;

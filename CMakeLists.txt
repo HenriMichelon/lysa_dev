@@ -55,7 +55,8 @@ set(SHADERS_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/shaders)
 # Slang shaders
 file(MAKE_DIRECTORY ${SHADERS_BUILD_DIR})
 set(SHADERS_SOURCE_FILES
-        "${SHADERS_SRC_DIR}/triangle.frag.slang"
+        "${SHADERS_SRC_DIR}/scale.vert.slang"
+        "${SHADERS_SRC_DIR}/uv_gradient.frag.slang"
 )
 compile_shaders(shaders ${SHADERS_BUILD_DIR} ${SHADERS_INCLUDE_DIR} ${LYSA_SHADERS_INCLUDE_DIR} ${SHADERS_SOURCE_FILES})
 add_custom_target(shaders_copy
@@ -109,7 +110,7 @@ endfunction()
 #######################################################
 set(MY_TARGET_SRC
         ${SRC_DIR}/MyApp.cpp
-        ${SRC_DIR}/MainScene.cpp)
+        ${SRC_DIR}/scenes/TrianglesScene.cpp)
 set(MY_TARGET_MODULES
-        ${SRC_DIR}/MainScene.ixx)
+        ${SRC_DIR}/scenes/TrianglesScene.ixx)
 build_target(myapp "${MY_TARGET_SRC}" "${MY_TARGET_MODULES}")
