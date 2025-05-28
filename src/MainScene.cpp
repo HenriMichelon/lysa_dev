@@ -60,7 +60,7 @@ namespace app {
         // Shader-based material for the second triangle
         // With a fragment shader, a vertex shader and alpha transparency enabled
         material2 = std::make_shared<lysa::ShaderMaterial>(
-            L"examples/uv_gradient.frag");
+            L"triangle.frag");
         //         "examples/scale.vert");
         material2->setTransparency(lysa::Transparency::ALPHA);
         material2->setCullMode(vireo::CullMode::NONE);
