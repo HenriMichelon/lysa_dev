@@ -6,9 +6,7 @@ export namespace app {
 
     class BaseScene : public lysa::Node {
     public:
-        void onReady() override {
-            getViewport()->getWindow().addPostprocessing(L"gamma_correction", &gammaCorrectionData, sizeof(gammaCorrectionData));
-        }
+        void onReady() override;
 
     private:
         struct {

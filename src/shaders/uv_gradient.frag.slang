@@ -8,5 +8,5 @@
 
 float4 fragmentMain(VertexOutput input) : SV_TARGET {
     Material material = materials[input.materialIndex];
-    return float4(input.uv.x, input.uv.y, material.parameters[0].r, 1.0);
+    return float4(input.uv.x, input.uv.y, material.parameters[0].r, 1.0) * scene.ambientLight;
 }
