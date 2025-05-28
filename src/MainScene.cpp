@@ -75,6 +75,18 @@ namespace app {
     }
 
     void MainScene::onPhysicsProcess(const float delta) {
+        // Rotate the color gradient used by the fragment shader
+        gradient += gradientSpeed * delta;
+        // Ensure the color gradient remains within the range [0, 1]
+        gradient = std::clamp(gradient, 0.0f, 1.0f);
+        if (gradient == 1.0f || gradient == 0.0f) {
+            gradientSpeed = -gradientSpeed;
+        }
+        // Send the parameters to the shaders
+        // We use the grandient value for the triangle colors
+        // AND for the triangle deformation scale
+        material2->setParameter(0, lysa::float4{gradient});
+        material2->setParameter(1, lysa::float4{gradient});
         // const auto pos = triangle2->getPosition();
         // triangle2->setPosition(pos.x - 0.1 * delta, 0.0, 0.0);
         // const auto color = material2->getAlbedoColor();
