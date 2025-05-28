@@ -5,6 +5,7 @@ import scene.triangles;
 namespace app {
 
     lysa::ApplicationConfiguration appConfig {
+        .loggingMode{lysa::LOGGING_MODE_STDOUT},
         .backend = vireo::Backend::VULKAN,
         // .backend = vireo::Backend::DIRECTX,
     };
