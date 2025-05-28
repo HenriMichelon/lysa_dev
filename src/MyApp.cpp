@@ -5,8 +5,8 @@ import scene.triangles;
 namespace app {
 
     lysa::ApplicationConfiguration appConfig {
-        // .backend = vireo::Backend::VULKAN,
-        .backend = vireo::Backend::DIRECTX,
+        .backend = vireo::Backend::VULKAN,
+        // .backend = vireo::Backend::DIRECTX,
     };
 
     lysa::WindowConfiguration windowConfig {
@@ -31,7 +31,7 @@ namespace app {
     class MyWindow : public lysa::Window {
     public:
         MyWindow() :
-        Window{windowConfig, std::make_shared<AddRemoveNodeScene>()} {
+        Window{windowConfig, std::make_shared<TrianglesScene>()} {
             viewport2Config.viewport.x = (getExtent().width - viewport2Config.viewport.width)/2;
             // addViewport(std::make_shared<lysa::Viewport>(viewport2Config))
                // ->setRootNode(std::make_shared<TrianglesScene>());
