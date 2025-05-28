@@ -86,11 +86,42 @@ namespace app {
         // We use the grandient value for the triangle colors
         // AND for the triangle deformation scale
         material2->setParameter(0, lysa::float4{gradient});
-        material2->setParameter(1, lysa::float4{gradient});
-        // const auto pos = triangle2->getPosition();
-        // triangle2->setPosition(pos.x - 0.1 * delta, 0.0, 0.0);
-        // const auto color = material2->getAlbedoColor();
-        // material2->setAlbedoColor({color.r - 0.1 * delta, color.g, color.b, color.a});
+        // material2->setParameter(1, lysa::float4{gradient});
+
+        if (rotate) {
+            const auto angle = delta * lysa::radians(90.0f) / 2;
+            triangle1->rotateGlobalY(angle);
+            triangle2->rotateY(-angle);
+        }
+    }
+
+    bool TrianglesScene::onInput(lysa::InputEvent &inputEvent) {
+        if (inputEvent.getType() == lysa::InputEventType::KEY) {
+            const auto &eventKey = dynamic_cast<lysa::InputEventKey &>(inputEvent);
+            if ((eventKey.getKey() == lysa::KEY_SPACE) && !eventKey.isPressed()) {
+                onMenuRotate();
+                return true;
+            }
+            if ((eventKey.getKey() == lysa::OS_KEY_BACKSPACE) && !eventKey.isPressed()) {
+                onMenuShader();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void TrianglesScene::onMenuRotate() {
+        // stop or restart rotation
+        rotate = !rotate;
+    }
+
+    void TrianglesScene::onMenuShader() const {
+        // toggle material of the right triangle
+        if (triangle1->getMesh()->getSurfaceMaterial(0).get() == material1.get()) {
+            triangle1->getMesh()->setSurfaceMaterial(0, material2);
+        } else {
+            triangle1->getMesh()->setSurfaceMaterial(0, material1);
+        }
     }
 
 }
