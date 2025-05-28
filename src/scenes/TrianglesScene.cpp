@@ -86,7 +86,7 @@ namespace app {
         // We use the grandient value for the triangle colors
         // AND for the triangle deformation scale
         material2->setParameter(0, lysa::float4{gradient});
-        // material2->setParameter(1, lysa::float4{gradient});
+        material2->setParameter(1, lysa::float4{gradient});
 
         if (rotate) {
             const auto angle = delta * lysa::radians(90.0f) / 2;
@@ -102,7 +102,7 @@ namespace app {
                 onMenuRotate();
                 return true;
             }
-            if ((eventKey.getKey() == lysa::OS_KEY_BACKSPACE) && !eventKey.isPressed()) {
+            if ((eventKey.getKey() == lysa::KEY_BACKSPACE) && !eventKey.isPressed()) {
                 onMenuShader();
                 return true;
             }
@@ -115,13 +115,15 @@ namespace app {
         rotate = !rotate;
     }
 
-    void TrianglesScene::onMenuShader() const {
+    void TrianglesScene::onMenuShader() {
+        removeChild(triangle1);
         // toggle material of the right triangle
         if (triangle1->getMesh()->getSurfaceMaterial(0).get() == material1.get()) {
             triangle1->getMesh()->setSurfaceMaterial(0, material2);
         } else {
             triangle1->getMesh()->setSurfaceMaterial(0, material1);
         }
+        addChild(triangle1);
     }
 
 }

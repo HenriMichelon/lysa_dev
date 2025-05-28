@@ -31,7 +31,7 @@ export namespace app {
 
         void onMenuRotate();
 
-        void onMenuShader() const;
+        void onMenuShader();
     };
 
 }
