@@ -38,8 +38,8 @@ include(cmake/shaders.cmake)
 include(cmake/libraries.cmake)
 
 #######################################################
-add_subdirectory(${LYSA_PROJECT_DIR} external_lib_build)
 set(LYSA_TARGET "lysa")
+add_subdirectory(${LYSA_PROJECT_DIR} external_lib_build/${LYSA_TARGET})
 set(LYSA_SRC_DIR ${LYSA_PROJECT_DIR}/src)
 set(LYSA_TARGET_SHADERS "lysa_shaders")
 set(LYSA_SHADERS_BUILD_DIR ${LYSA_PROJECT_DIR}/shaders)
@@ -90,12 +90,11 @@ function(build_target TARGET_NAME SRCS MODULES)
     target_include_directories(${TARGET_NAME} PUBLIC ${INCLUDE_DIR} ${LYSA_INCLUDE_DIR} ${xxhash_SOURCE_DIR})
     target_link_libraries(${TARGET_NAME} ${LYSA_TARGET} std-cxx-modules xxhash)
     add_dependencies(${TARGET_NAME} shaders_copy)
+    target_precompile_headers(${TARGET_NAME} PRIVATE
+            "<cstdint>"
+            "<cstddef>"
+    )
     if(WIN32)
-        target_precompile_headers(${TARGET_NAME} PRIVATE
-                "<windows.h>"
-                "<cstdint>"
-                "<cstddef>"
-        )
         if (DIRECTX_BACKEND)
             target_link_libraries(${TARGET_NAME} Xinput dinput8 dxguid dxgi d3d12 d3dcompiler)
         endif ()
