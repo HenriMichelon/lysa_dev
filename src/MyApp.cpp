@@ -34,9 +34,17 @@ namespace app {
         MyWindow() :
         Window{windowConfig, std::make_shared<AddRemoveNodeScene>()} {
             viewport2Config.viewport.x = (getExtent().width - viewport2Config.viewport.width)/2;
-            addViewport(std::make_shared<lysa::Viewport>(viewport2Config))
-               ->setRootNode(std::make_shared<TrianglesScene>());
+            viewport2 = addViewport(std::make_shared<lysa::Viewport>(viewport2Config));
+            viewport2->setRootNode(std::make_shared<TrianglesScene>());
         }
+
+        void onResize() override {
+            viewport2Config.viewport.x = (getExtent().width - viewport2Config.viewport.width)/2;
+            viewport2->setViewport(viewport2Config.viewport);
+        }
+
+    private:
+        std::shared_ptr<lysa::Viewport> viewport2;
     };
 
     class MyApp : public lysa::Application {
