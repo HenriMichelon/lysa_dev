@@ -6,8 +6,8 @@ namespace app {
 
     lysa::ApplicationConfiguration appConfig {
         .loggingMode{lysa::LOGGING_MODE_STDOUT},
-        .backend = vireo::Backend::VULKAN,
-        // .backend = vireo::Backend::DIRECTX,
+        // .backend = vireo::Backend::VULKAN,
+        .backend = vireo::Backend::DIRECTX,
     };
 
     lysa::WindowConfiguration windowConfig {
@@ -34,13 +34,13 @@ namespace app {
         MyWindow() :
         Window{windowConfig, std::make_shared<AddRemoveNodeScene>()} {
             viewport2Config.viewport.x = (getExtent().width - viewport2Config.viewport.width)/2;
-            viewport2 = addViewport(std::make_shared<lysa::Viewport>(viewport2Config));
-            viewport2->setRootNode(std::make_shared<TrianglesScene>());
+            // viewport2 = addViewport(std::make_shared<lysa::Viewport>(viewport2Config));
+            // viewport2->setRootNode(std::make_shared<TrianglesScene>());
         }
 
         void onResize() override {
             viewport2Config.viewport.x = (getExtent().width - viewport2Config.viewport.width)/2;
-            viewport2->setViewport(viewport2Config.viewport);
+            // viewport2->setViewport(viewport2Config.viewport);
         }
 
     private:
