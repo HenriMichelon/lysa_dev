@@ -6,6 +6,7 @@ namespace app {
 
     void TrianglesScene::onReady() {
         BaseScene::onReady();
+        camera->setPosition(0.0f, 0.0f, 2.0f);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // Define triangle datas
