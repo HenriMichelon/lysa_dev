@@ -6,16 +6,16 @@ namespace app {
 
     lysa::ApplicationConfiguration appConfig {
         .loggingMode{lysa::LOGGING_MODE_STDOUT},
-        // .backend = vireo::Backend::VULKAN,
-        .backend = vireo::Backend::DIRECTX,
+        .backend = vireo::Backend::VULKAN,
+        // .backend = vireo::Backend::DIRECTX,
     };
 
     lysa::WindowConfiguration windowConfig {
-        .width = 800,
-        .height = 600,
+        .width = 1280,
+        .height = 720,
         .mainViewportConfig = {},
         .renderingConfig = {
-            .presentMode = vireo::PresentMode::IMMEDIATE,
+            .presentMode = vireo::PresentMode::VSYNC,
             .clearColor = lysa::float3{0.0f, 0.2f, 0.4f},
         },
     };
@@ -34,8 +34,8 @@ namespace app {
         MyWindow() :
         Window{windowConfig, std::make_shared<AddRemoveNodeScene>()} {
             viewport2Config.viewport.x = (getExtent().width - viewport2Config.viewport.width)/2;
-            // addViewport(std::make_shared<lysa::Viewport>(viewport2Config))
-               // ->setRootNode(std::make_shared<TrianglesScene>());
+            addViewport(std::make_shared<lysa::Viewport>(viewport2Config))
+               ->setRootNode(std::make_shared<TrianglesScene>());
         }
     };
 

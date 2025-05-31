@@ -9,8 +9,11 @@ export namespace app {
     public:
         void onReady() override;
 
-    private:
+        void onPhysicsProcess(float delta) override;
 
+    private:
+        bool rotate{true};
+        std::shared_ptr<Node> cube;
     };
 
 }
