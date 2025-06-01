@@ -86,7 +86,7 @@ namespace app {
 
         if (rotate) {
             const auto angle = delta * lysa::radians(90.0f) / 2;
-            triangle1->rotateGlobalY(angle);
+            triangle1->rotateY(angle);
             triangle2->rotateY(-angle);
         }
     }

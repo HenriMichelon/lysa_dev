@@ -378,3 +378,10 @@ log.txt
 cmake-build-debug-mingw
 *.dxil
 /renderdoc.cap
+/res/models/sponza.assets
+/res/models/survival_guitar_backpack.assets
+/res/models/san-miguel-low.assets
+/res/models/san-miguel-low.blend
+/res/models/san-miguel-low.glb
+/res/models/survival_guitar_backpack.assets
+/res/models/sponza.assets
