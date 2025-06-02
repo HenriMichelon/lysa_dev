@@ -27,9 +27,14 @@ namespace app {
     void AddRemoveNodeScene::onPhysicsProcess(const float delta) {
         const auto angle = delta * lysa::radians(45.0f) / 2;
         if (lysa::Input::isKeyPressed(lysa::KEY_RIGHT)) {
-            cube->rotateY(angle);
+            cameraPivot->rotateY(-angle);
         } else if (lysa::Input::isKeyPressed(lysa::KEY_LEFT)) {
-            cube->rotateY(-angle);
+            cameraPivot->rotateY(angle);
+        }
+        if (lysa::Input::isKeyPressed(lysa::KEY_UP)) {
+            camera->rotateX(-angle);
+        } else if (lysa::Input::isKeyPressed(lysa::KEY_DOWN)) {
+            camera->rotateX(angle);
         }
     }
 }

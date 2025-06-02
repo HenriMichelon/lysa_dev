@@ -10,6 +10,7 @@ export namespace app {
 
     protected:
         std::shared_ptr<lysa::Camera> camera;
+        std::shared_ptr<lysa::Node> cameraPivot;
 
     private:
         struct {
