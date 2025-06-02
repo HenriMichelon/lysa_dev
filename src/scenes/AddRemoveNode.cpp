@@ -7,6 +7,7 @@ namespace app {
     void AddRemoveNodeScene::onReady() {
         BaseScene::onReady();
         camera->setPosition(0.0f, 2.0f, 0.0f);
+        camera->rotateY(lysa::radians(45.0f));
         // camera->setPosition(0.0f, 0.0f, 4.0f);
         // camera->rotateX(lysa::radians(-45.0f));
         // camera->rotateY(lysa::radians(35.0f));

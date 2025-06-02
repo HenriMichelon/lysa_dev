@@ -12,7 +12,7 @@ VertexOutput vertexMain(uint vertexId: SV_VertexID ) {
     Vertex vertex = vertices[index.index + instanceData.firstVertex];
     Material material = materials[instanceData.materialIndex];
 
-    vertex.position = vertex.position * float3(1.0f + material.parameters[1].x);
+    vertex.position.xyz = vertex.position.xyz * float3(1.0f + material.parameters[1].x);
     return vertexMVP(
         instanceData,
         vertex);
