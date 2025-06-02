@@ -8,12 +8,20 @@ namespace app {
         .loggingMode{lysa::LOGGING_MODE_STDOUT},
         .backend = vireo::Backend::VULKAN,
         // .backend = vireo::Backend::DIRECTX,
+        .resourcesConfig = {
+            // .maxVertexInstances = 50000000,
+            // .maxIndexInstances = 10000000,
+        }
     };
 
     lysa::WindowConfiguration windowConfig {
         .width = 1280,
         .height = 720,
-        .mainViewportConfig = {},
+        .mainViewportConfig = {
+            .sceneConfig = {
+                // .maxVertexPerFrame = 30000000
+            }
+        },
         .renderingConfig = {
             .presentMode = vireo::PresentMode::IMMEDIATE,
             .clearColor = lysa::float3{0.0f, 0.2f, 0.4f},
