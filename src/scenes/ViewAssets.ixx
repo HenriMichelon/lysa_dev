@@ -1,11 +1,11 @@
-export module scene.add_remove;
+export module scene.view_assets;
 
 import lysa;
 import scene.base;
 
 export namespace app {
 
-    class AddRemoveNodeScene : public BaseScene {
+    class ViewAssetsScene : public BaseScene {
     public:
         void onReady() override;
 

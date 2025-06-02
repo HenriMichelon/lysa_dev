@@ -1,10 +1,10 @@
-module scene.add_remove;
+module scene.view_assets;
 
 import lysa;
 
 namespace app {
 
-    void AddRemoveNodeScene::onReady() {
+    void ViewAssetsScene::onReady() {
         BaseScene::onReady();
         // camera->setPosition(0.0f, 2.0f, 0.0f);
         // camera->rotateY(lysa::radians(45.0f));
