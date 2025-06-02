@@ -21,7 +21,7 @@ namespace app {
 
     void BaseScene::onPhysicsProcess(const float delta) {
         const auto angle = delta * lysa::radians(45.0f);
-        const auto velocity = 10.0f * delta;
+        const auto velocity = 5.0f * delta;
         if (lysa::Input::isKeyPressed(lysa::KEY_W)) {
             player->translate(player->getFrontVector() * velocity);
         } else if (lysa::Input::isKeyPressed(lysa::KEY_S)) {
@@ -32,6 +32,11 @@ namespace app {
         } else if (lysa::Input::isKeyPressed(lysa::KEY_D)) {
             player->translate(player->getRightVector() * velocity);
         }
+        if (lysa::Input::isKeyPressed(lysa::KEY_PAGE_UP)) {
+            player->translate(player->getUpVector() * velocity);
+        } else if (lysa::Input::isKeyPressed(lysa::KEY_PAGE_DOWN)) {
+            player->translate(player->getDownVector() * velocity);
+        }
         if (lysa::Input::isKeyPressed(lysa::KEY_RIGHT)) {
             player->rotateY(-angle);
         } else if (lysa::Input::isKeyPressed(lysa::KEY_LEFT)) {
@@ -41,6 +46,10 @@ namespace app {
             camera->rotateX(-angle);
         } else if (lysa::Input::isKeyPressed(lysa::KEY_DOWN)) {
             camera->rotateX(angle);
+        }
+        if (lysa::Input::isKeyJustPressed(lysa::KEY_BACKSPACE)) {
+            lysa::GAME1(lysa::to_string(player->getPositionGlobal()));
+            lysa::GAME1(lysa::to_string(player->getRotationGlobal()));
         }
     }
 

@@ -6,16 +6,14 @@ namespace app {
 
     void ViewAssetsScene::onReady() {
         BaseScene::onReady();
-        // camera->setPosition(0.0f, 2.0f, 0.0f);
-        // camera->rotateY(lysa::radians(45.0f));
-        camera->setPosition(0.0f, 2.0f, 4.0f);
-        // camera->rotateX(lysa::radians(-45.0f));
-        // camera->rotateY(lysa::radians(35.0f));
+        // player->setPosition(0.0f, 2.0f, 4.0f);
+        player->setRotation({0.000000,0.949024,0.000000,0.315239});
+        player->setPosition({-5.947837,2.416667,-1.021150});
 
         addChild(std::make_shared<lysa::Environment>(lysa::float4{1.0, 1.0, 1.0, 1.0f}));
 
         cube = std::make_shared<Node>(L"Cube");
-        lysa::AssetsPack::load(*cube, L"app://res/models/city_buildings.assets");
+        lysa::AssetsPack::load(*cube, L"app://res/models/sponza.assets");
         // cube->scale(.01f);
         // cube->printTree();
         addChild(cube);
