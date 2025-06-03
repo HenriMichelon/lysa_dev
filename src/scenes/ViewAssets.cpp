@@ -18,7 +18,7 @@ namespace app {
         addChild(dirLight);
 
         cube = std::make_shared<Node>(L"Cube");
-        lysa::AssetsPack::load(*cube, L"app://res/models/sponza.assets");
+        lysa::AssetsPack::load(*cube, L"app://res/models/city_buildings.assets");
         // cube->scale(.01f);
         // cube->printTree();
         addChild(cube);

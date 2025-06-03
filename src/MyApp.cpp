@@ -25,6 +25,7 @@ namespace app {
         .renderingConfig = {
             .presentMode = vireo::PresentMode::IMMEDIATE,
             .clearColor = lysa::float3{0.0f, 0.2f, 0.4f},
+            .forwardDepthPrepass = false,
         },
     };
 
