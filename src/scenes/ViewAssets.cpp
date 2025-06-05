@@ -23,10 +23,10 @@ namespace app {
         // addChild(dirLight);
 
         auto node  = std::make_shared<Node>(L"Cube");
-        lysa::AssetsPack::load(*node, L"app://res/models/crates.assets");
+        lysa::AssetsPack::load(*node, L"app://res/models/sponza.assets");
         // node->scale(.01f);
         addChild(node);
-        printTree();
+        // printTree();
 
         lysa::GAME1("Scene loaded...");
     }

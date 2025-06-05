@@ -15,7 +15,7 @@ namespace app {
         player->addChild(cameraPivot);
 
         camera = std::make_shared<lysa::Camera>();
-        camera->setFarDistance(10.0f);
+        camera->setFarDistance(500.0f);
         cameraPivot->addChild(camera);
     }
 
