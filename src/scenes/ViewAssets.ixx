@@ -8,9 +8,6 @@ export namespace app {
     class ViewAssetsScene : public BaseScene {
     public:
         void onReady() override;
-
-    private:
-        std::shared_ptr<Node> cube;
     };
 
 }

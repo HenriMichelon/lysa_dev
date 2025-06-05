@@ -11,11 +11,11 @@ namespace app {
         addChild(player);
 
         cameraPivot = std::make_shared<lysa::Node>();
-        cameraPivot->setPosition(0.0f, 1.5f, 0.0f);
+        // cameraPivot->setPosition(0.0f, 1.5f, 0.0f);
         player->addChild(cameraPivot);
 
         camera = std::make_shared<lysa::Camera>();
-        camera->setFarDistance(500.0f);
+        camera->setFarDistance(10.0f);
         cameraPivot->addChild(camera);
     }
 
