@@ -7,9 +7,12 @@
 ##### Compile Slang sources files into DXIL & SPIR-V
 
 # Use the Vulkan SDK version of the slangc executable
-find_program(SLANGC_EXECUTABLE NAMES slangc HINTS "${Vulkan_INSTALL_DIR}/bin")
+find_program(SLANGC_EXECUTABLE NAMES slangc)
 if(NOT SLANGC_EXECUTABLE)
-    message(FATAL_ERROR "slangc not found. Please ensure the Vulkan SDK is installed and slangc is available.")
+    find_program(SLANGC_EXECUTABLE NAMES slangc HINTS "${Vulkan_INSTALL_DIR}/bin")
+endif()
+if(NOT SLANGC_EXECUTABLE)
+    message(FATAL_ERROR "slangc executable not found.")
 endif()
 
 set(SHADER_COMMANDS)
@@ -61,7 +64,7 @@ endfunction()
 function(compile_shaders TARGET_NAME BUILD_DIR SHADER_INCLUDE_DIR GLOBAL_SHADER_INCLUDE_DIR)
     set(SHADER_SOURCE_FILES ${ARGN}) # the rest of arguments to this function will be assigned as shader source files
     set(SHADER_BINARIES ${BUILD_DIR})
-message(${GLOBAL_SHADER_INCLUDE_DIR})
+
     list(LENGTH SHADER_SOURCE_FILES FILE_COUNT)
     if(FILE_COUNT EQUAL 0)
         return()
