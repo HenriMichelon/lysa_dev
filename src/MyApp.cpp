@@ -6,11 +6,11 @@ namespace app {
 
     lysa::ApplicationConfiguration appConfig {
         .loggingMode{lysa::LOGGING_MODE_STDOUT},
-        .backend = vireo::Backend::VULKAN,
-        // .backend = vireo::Backend::DIRECTX,
+        // .backend = vireo::Backend::VULKAN,
+        .backend = vireo::Backend::DIRECTX,
         .resourcesConfig = {
             // .maxVertexInstances = 50000000,
-            // .maxIndexInstances = 10000000,
+            // .maxIndexInstances  = 20000000,
         }
     };
 
