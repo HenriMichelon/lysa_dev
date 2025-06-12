@@ -14,7 +14,7 @@ namespace app {
         node2 = std::make_shared<Node>();
         lysa::AssetsPack::load(*node1, L"app://res/models/crate.assets");
         lysa::AssetsPack::load(*node2, L"app://res/models/sphere.assets");
-        // addChild(node1);
+        addNode();
     }
 
     void AddRemove::addNode() {
@@ -33,6 +33,20 @@ namespace app {
         if (removeChild(nodes.back())) { nodes.pop_back(); }
     }
 
+    void AddRemove::toggleVisibility() {
+        if (visible) {
+            for (const auto& node : nodes) {
+                node->setVisible(lysa::randomi(1) == 0);
+            }
+            visible = false;
+        } else {
+            for (const auto& node : nodes) {
+                node->setVisible(true);
+            }
+            visible = true;
+        }
+    }
+
     bool AddRemove::onInput(lysa::InputEvent &inputEvent) {
         if (inputEvent.getType() == lysa::InputEventType::KEY) {
             const auto &eventKey = dynamic_cast<lysa::InputEventKey &>(inputEvent);
@@ -42,6 +56,10 @@ namespace app {
             }
             if ((eventKey.getKey() == lysa::KEY_BACKSPACE) && !eventKey.isPressed()) {
                 removeNode();
+                return true;
+            }
+            if ((eventKey.getKey() == lysa::KEY_V) && !eventKey.isPressed()) {
+                toggleVisibility();
                 return true;
             }
         }

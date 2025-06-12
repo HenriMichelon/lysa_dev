@@ -13,9 +13,11 @@ export namespace app {
         std::shared_ptr<Node> node1;
         std::shared_ptr<Node> node2;
         std::list<std::shared_ptr<Node>> nodes;
+        bool visible{true};
 
         void addNode();
         void removeNode();
+        void toggleVisibility();
     };
 
 }

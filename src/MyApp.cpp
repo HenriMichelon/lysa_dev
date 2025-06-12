@@ -89,7 +89,7 @@ namespace app {
                     totalImages += usage.size;
                 }
                 std::cout << "Buffers : " << totalBuffers << " bytes (" << totalBuffers/1024/1024 << "Mb)" << std::endl;
-                std::cout << "Images: " << totalImages << " bytes (" << totalImages/1024/1024 << "Mb)" << std::endl;
+                std::cout << "Images  : " << totalImages << " bytes (" << totalImages/1024/1024 << "Mb)" << std::endl;
             }
         }
     };
