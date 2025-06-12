@@ -4,16 +4,19 @@
 * This software is released under the MIT License.
 * https://opensource.org/licenses/MIT
 */
-#include "scene_data.inc.slang"
+#include "scene.inc.slang"
 
-VertexOutput vertexMain(uint vertexId: SV_VertexID ) {
-    Index index = indices[vertexId];
-    InstanceData instanceData = instancesData[index.surfaceIndex];
-    Vertex vertex = vertices[index.index + instanceData.firstVertex];
-    Material material = materials[instanceData.materialIndex];
-
-    vertex.position.xyz = vertex.position.xyz * float3(1.0f + material.parameters[1].x);
-    return vertexMVP(
-        instanceData,
-        vertex);
+VertexOutput vertexMain(VertexInput input) {
+    VertexOutput output;
+    Instance instance = instances[instanceIndex];
+    MeshSurface surface = meshSurfaces[instance.meshSurfaceIndex];
+    Material material = materials[surface.materialIndex];
+    float4x4 model = meshInstances[instance.meshInstanceIndex].transform;
+    float4 position = float4(input.position.xyz * float3(1.0f + material.parameters[1].x), 1.0);
+    float4 positionW = mul(model, position);
+    output.position = mul(scene.projection, mul(scene.view, positionW));
+    output.uv = float2(input.position.w, input.normal.w);
+    output.materialIndex = surface.materialIndex;
+    return output;
 }
+

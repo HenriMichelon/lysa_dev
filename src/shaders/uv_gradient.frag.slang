@@ -4,7 +4,7 @@
 * This software is released under the MIT License.
 * https://opensource.org/licenses/MIT
 */
-#include "scene_data.inc.slang"
+#include "scene.inc.slang"
 
 float4 fragmentMain(VertexOutput input) : SV_TARGET {
     Material material = materials[input.materialIndex];
