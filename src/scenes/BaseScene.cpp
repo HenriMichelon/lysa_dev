@@ -47,7 +47,7 @@ namespace app {
         } else if (lysa::Input::isKeyPressed(lysa::KEY_DOWN)) {
             camera->rotateX(angle);
         }
-        if (lysa::Input::isKeyJustPressed(lysa::KEY_BACKSPACE)) {
+        if (lysa::Input::isKeyJustPressed(lysa::KEY_P)) {
             lysa::GAME1(lysa::to_string(player->getPositionGlobal()));
             lysa::GAME1(lysa::to_string(player->getRotationGlobal()));
         }

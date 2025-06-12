@@ -1,13 +1,21 @@
-export module scene.view_assets;
+export module scene.add_remove;
 
 import lysa;
 import scene.base;
 
 export namespace app {
 
-    class ViewAssetsScene : public BaseScene {
+    class AddRemove : public BaseScene {
     public:
         void onReady() override;
+        bool onInput(lysa::InputEvent &inputEvent) override;
+    private:
+        std::shared_ptr<Node> node1;
+        std::shared_ptr<Node> node2;
+        std::list<std::shared_ptr<Node>> nodes;
+
+        void addNode();
+        void removeNode();
     };
 
 }
