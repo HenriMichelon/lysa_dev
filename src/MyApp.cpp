@@ -9,8 +9,8 @@ namespace app {
         // .backend = vireo::Backend::VULKAN,
         .backend = vireo::Backend::DIRECTX,
         .resourcesConfig = {
-            // .maxVertexInstances = 50000000,
-            // .maxIndexInstances  = 20000000,
+            .maxVertexInstances = 50000000,
+            .maxIndexInstances  = 20000000,
         }
     };
 
