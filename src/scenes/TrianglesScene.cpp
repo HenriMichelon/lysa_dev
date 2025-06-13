@@ -6,7 +6,7 @@ namespace app {
 
     void TrianglesScene::onReady() {
         BaseScene::onReady();
-        camera->setPosition(0.0f, 0.0f, 2.0f);
+        camera->setPosition({0.0f, 0.0f, 2.0f});
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // Define triangle datas
@@ -43,7 +43,7 @@ namespace app {
         mesh1->setSurfaceMaterial(0, material1);
         // Create, place and add the Node to the scene
         triangle1 = std::make_shared<lysa::MeshInstance>(mesh1, L"Triangle 1");
-        triangle1->setPosition(1.0f, 0.0f, 0.0f);
+        triangle1->setPosition({1.0f, 0.0f, 0.0f});
         addChild(triangle1);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,7 +66,7 @@ namespace app {
         mesh2->setSurfaceMaterial(0, material2);
         // Create, place and add the Node to the scene
         triangle2 = std::make_shared<lysa::MeshInstance>(mesh2, L"Triangle 2");
-        triangle2->setPosition(-1.0, 0.0, 0.0);
+        triangle2->setPosition({-1.0, 0.0, 0.0});
         addChild(triangle2);
     }
 

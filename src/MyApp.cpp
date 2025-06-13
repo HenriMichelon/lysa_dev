@@ -2,10 +2,24 @@ import lysa;
 import scene.view_assets;
 import scene.triangles;
 import scene.add_remove;
+import scene.physics;
+import layers;
 
 namespace app {
 
     lysa::ApplicationConfiguration appConfig {
+        .physicsConfig = {
+            .layerCollisionTable = lysa::LayerCollisionTable{
+                LAYERS_COUNT,
+                {
+               { PLAYER, { WORLD, BODIES, USABLE_PROP }},
+               { BODIES, { WORLD, BODIES, PLAYER, USABLE_PROP }},
+               { PLAYER_RAYCAST, { BODIES }},
+               { TRIGGERS, { PLAYER }},
+            { INTERACTIONS, { USABLE_PROP }},
+            }
+            },
+        },
         .loggingMode{lysa::LOGGING_MODE_STDOUT},
         .backend = vireo::Backend::VULKAN,
         // .backend = vireo::Backend::DIRECTX,
@@ -43,7 +57,7 @@ namespace app {
     class MyWindow : public lysa::Window {
     public:
         MyWindow() :
-        Window{windowConfig, std::make_shared<ViewAssetsScene>()} {
+        Window{windowConfig, std::make_shared<PhysicsMainScene>()} {
             viewport2Config.viewport.x = (getExtent().width - viewport2Config.viewport.width)/2;
             // viewport2 = addViewport(std::make_shared<lysa::Viewport>(viewport2Config));
             // viewport2->setRootNode(std::make_shared<TrianglesScene>());

@@ -112,15 +112,17 @@ set(MY_TARGET_SRC
         ${SRC_DIR}/nodes/Crate.cpp
         ${SRC_DIR}/nodes/Player.cpp
         ${SRC_DIR}/scenes/AddRemove.cpp
-        ${SRC_DIR}/scenes/ViewAssets.cpp
         ${SRC_DIR}/scenes/BaseScene.cpp
-        ${SRC_DIR}/scenes/TrianglesScene.cpp)
+        ${SRC_DIR}/scenes/Physics.cpp
+        ${SRC_DIR}/scenes/TrianglesScene.cpp
+        ${SRC_DIR}/scenes/ViewAssets.cpp)
 set(MY_TARGET_MODULES
         ${SRC_DIR}/Layers.ixx
         ${SRC_DIR}/nodes/Crate.ixx
         ${SRC_DIR}/nodes/Player.ixx
         ${SRC_DIR}/scenes/AddRemove.ixx
-        ${SRC_DIR}/scenes/ViewAssets.ixx
         ${SRC_DIR}/scenes/BaseScene.ixx
-        ${SRC_DIR}/scenes/TrianglesScene.ixx)
+        ${SRC_DIR}/scenes/Physics.ixx
+        ${SRC_DIR}/scenes/TrianglesScene.ixx
+        ${SRC_DIR}/scenes/ViewAssets.ixx)
 build_target(myapp "${MY_TARGET_SRC}" "${MY_TARGET_MODULES}")

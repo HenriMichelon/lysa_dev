@@ -19,10 +19,10 @@ namespace app {
 
     void AddRemove::addNode() {
         const auto newNode = lysa::randomi(1) == 0 ? node1->duplicate() : node2->duplicate();
-        newNode->setPosition(
+        newNode->setPosition({
             lysa::randomf(10.0f) - 5.0f,
             lysa::randomf(10.0f) - 5.0f,
-            lysa::randomf(10.0f) - 15.0f);
+            lysa::randomf(10.0f) - 15.0f});
         if (addChild(newNode)) {
             nodes.push_back(newNode);
             lysa::GAME1(nodes.size(), " nodes");

@@ -3,7 +3,7 @@ module nodes.player;
 namespace app {
 
     Player::Player():
-        // the player has a physic body for the collisions
+        // the player has a physics body for the collisions
         Character{
             1.8, 0.5,
             PLAYER,
@@ -14,7 +14,7 @@ namespace app {
         // if the mouse is captured, the player can rotate the view with the mouse
         if (mouseCaptured && (event.getType() == lysa::InputEventType::MOUSE_MOTION)) {
             const auto &eventMouseMotion = dynamic_cast<lysa::InputEventMouseMotion &>(event);
-            const auto  yRot             = -eventMouseMotion.getRelativeX() * mouseSensitivity;
+            const auto  yRot= -eventMouseMotion.getRelativeX() * mouseSensitivity;
             rotateY(yRot);
             cameraPivot->rotateX(eventMouseMotion.getRelativeY() * mouseSensitivity * mouseInvertedAxisY);
             cameraPivot->setRotationX(std::clamp(cameraPivot->getRotationX(), maxCameraAngleDown, maxCameraAngleUp));
@@ -111,7 +111,7 @@ namespace app {
             // preserve the vertical velocity if we are in the air
             currentState.velocity = currentVerticalVelocity;
             // we can't escape gravity
-            currentState.velocity +=lysa::Application::get().getGravity() * getUpVector() * delta;
+            currentState.velocity += lysa::Application::getPhysicsEngine().getGravity() * getUpVector() * delta;
         }
 
         // check if the player wants to move
@@ -168,11 +168,11 @@ namespace app {
             if (cameraCollisionCounter == 0) {
                 // we use a tween for a smooth camera movement
                 cameraOutTween = cameraPivot->createPropertyTween(
-                        reinterpret_cast<lysa::PropertyTween<lysa::float3>::Setter>(&Node::setPosition),
+                        (lysa::PropertyTween<lysa::float3>::Setter)(&Node::setPosition),
                         cameraPivot->getPosition(),
                         lysa::FLOAT3ZERO,
                         0.5f);
-                // stop a possible existing tween to avoid movements collision
+                // stop a possible existing tween to avoid movement collision
                 cameraPivot->killTween(cameraInTween);
                 cameraCollisionTarget = nullptr;
             }
@@ -194,6 +194,7 @@ namespace app {
         captureMouse();
 
         // create the player node
+        model = std::make_shared<Node>();
         lysa::AssetsPack::load(*model, L"app://res/models/capsule.assets");
         // model->setPosition({0.0, -1.8 / 2.0, 0.0});
         addChild(model);
@@ -207,7 +208,7 @@ namespace app {
 
         // create the collision sensor used to detect if the camera view area collides with something
         if (cameraCollisions) {
-            cameraCollisionSensor = std::make_shared<lysa::CollisionArea>(
+             cameraCollisionSensor = std::make_shared<lysa::CollisionArea>(
                     std::make_shared<lysa::SphereShape>(0.25f),
                     WORLD | BODIES,
                     L"cameraCollisionNode"
@@ -229,7 +230,7 @@ namespace app {
         camera->setPerspectiveProjection(75.0, 0.1, 500.0);
         cameraPivot->addChild(camera);
         // replace the current camera with the player camera
-        lysa::Application::get().activateCamera(camera);
+        getViewport()->activateCamera(camera);
 
         // display information about the game pads
         lysa::GAME1(lysa::Input::getConnectedJoypads(), " connected gamepad(s)");
@@ -246,13 +247,13 @@ namespace app {
     }
 
     void Player::releaseMouse() {
-        lysa::Input::setMouseMode(lysa::MouseMode::VISIBLE);
+        getViewport()->getWindow().setMouseMode(lysa::MouseMode::VISIBLE);
         mouseCaptured = false;
     }
 
     void Player::captureMouse() {
         if (!mouseCaptured) {
-            lysa::Input::setMouseMode(lysa::MouseMode::HIDDEN_CAPTURED);
+            getViewport()->getWindow().setMouseMode(lysa::MouseMode::HIDDEN_CAPTURED);
             mouseCaptured = true;
         }
     }

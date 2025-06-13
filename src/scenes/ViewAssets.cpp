@@ -13,8 +13,8 @@ namespace app {
         addChild(std::make_shared<lysa::Environment>(lysa::float4{1.0, 1.0, 1.0,  .05f}));
 
         const auto dirLight = std::make_shared<lysa::DirectionalLight>(lysa::float4{1.0, 1.0, 1.0, 1.0f});
-        dirLight->rotateX(45.0);
-        dirLight->rotateY(45.0);
+        dirLight->rotateX(lysa::radians(-45.0f));
+        dirLight->rotateY(lysa::radians(45.0));
         addChild(dirLight);
 
         const auto node  = std::make_shared<Node>(L"Cube");
