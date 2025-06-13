@@ -7,8 +7,8 @@ namespace app {
 
     lysa::ApplicationConfiguration appConfig {
         .loggingMode{lysa::LOGGING_MODE_STDOUT},
-        // .backend = vireo::Backend::VULKAN,
-        .backend = vireo::Backend::DIRECTX,
+        .backend = vireo::Backend::VULKAN,
+        // .backend = vireo::Backend::DIRECTX,
         .resourcesConfig = {
             // .maxVertexInstances = 50000000,
             // .maxIndexInstances  = 20000000,
@@ -43,7 +43,7 @@ namespace app {
     class MyWindow : public lysa::Window {
     public:
         MyWindow() :
-        Window{windowConfig, std::make_shared<AddRemove>()} {
+        Window{windowConfig, std::make_shared<ViewAssetsScene>()} {
             viewport2Config.viewport.x = (getExtent().width - viewport2Config.viewport.width)/2;
             // viewport2 = addViewport(std::make_shared<lysa::Viewport>(viewport2Config));
             // viewport2->setRootNode(std::make_shared<TrianglesScene>());

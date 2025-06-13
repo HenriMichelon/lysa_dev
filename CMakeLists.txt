@@ -109,11 +109,16 @@ endfunction()
 #######################################################
 set(MY_TARGET_SRC
         ${SRC_DIR}/MyApp.cpp
+        ${SRC_DIR}/nodes/Crate.cpp
+        ${SRC_DIR}/nodes/Player.cpp
         ${SRC_DIR}/scenes/AddRemove.cpp
         ${SRC_DIR}/scenes/ViewAssets.cpp
         ${SRC_DIR}/scenes/BaseScene.cpp
         ${SRC_DIR}/scenes/TrianglesScene.cpp)
 set(MY_TARGET_MODULES
+        ${SRC_DIR}/Layers.ixx
+        ${SRC_DIR}/nodes/Crate.ixx
+        ${SRC_DIR}/nodes/Player.ixx
         ${SRC_DIR}/scenes/AddRemove.ixx
         ${SRC_DIR}/scenes/ViewAssets.ixx
         ${SRC_DIR}/scenes/BaseScene.ixx
