@@ -14,7 +14,7 @@ namespace app {
         // make the scene node not pauseable
         setProcessMode(lysa::ProcessMode::ALWAYS);
         // add the global environment
-        addChild(std::make_shared<lysa::Environment>(lysa::float4{1.0, 1.0, 1.0, 0.1f}));
+        addChild(std::make_shared<lysa::Environment>(lysa::float4{1.0, 1.0, 1.0, .75f}));
 
         // add a game node and make it pauseable since the scene can't be paused
         const auto game = std::make_shared<Node>(L"Game");
@@ -24,7 +24,7 @@ namespace app {
         // add the Sun
         const auto directionalLight1 = std::make_shared<lysa::DirectionalLight>(lysa::float4{1.0f, 1.0f, 1.0f, 0.8f});
         directionalLight1->rotateX(lysa::radians(-45.0f));
-        directionalLight1->rotateY(lysa::radians( 138.0f));
+        directionalLight1->rotateY(lysa::radians( 45.0f));
         directionalLight1->setCastShadows(true);
         game->addChild(directionalLight1);
 
@@ -74,12 +74,12 @@ namespace app {
         // outlineMaterials.add(collisionOutlineMaterial);
 
         // build the scene floor node and associated static body
-        auto floorScene = std::make_shared<Node>();
+        const auto floorScene = std::make_shared<Node>();
         lysa::AssetsPack::load(*floorScene, L"app://res/models/playground.assets");
         auto floorModel = floorScene->findFirstChild(L"Box001_asphalt_0");
         if (floorModel == nullptr) throw lysa::Exception("Floor not found");
         std::vector<lysa::SubShape> floorSubShapes;
-        floorSubShapes.push_back(lysa::SubShape{make_shared<lysa::ConvexHullShape>(floorModel)});
+        floorSubShapes.push_back(lysa::SubShape{std::make_shared<lysa::ConvexHullShape>(floorModel)});
         // add virtual walls
         floorSubShapes.push_back(lysa::SubShape{
             std::make_shared<lysa::BoxShape>(lysa::float3{25.0, 10.0, 1.0}), lysa::float3{0.0, 5.0, -15.0}});

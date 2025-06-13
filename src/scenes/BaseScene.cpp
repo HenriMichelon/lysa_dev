@@ -39,7 +39,9 @@ namespace app {
         }
         if (lysa::Input::isKeyPressed(lysa::KEY_RIGHT)) {
             player->rotateY(-angle);
+            lysa::GAME1(-angle, " yRot");
         } else if (lysa::Input::isKeyPressed(lysa::KEY_LEFT)) {
+            lysa::GAME1(angle, " yRot");
             player->rotateY(angle);
         }
         if (lysa::Input::isKeyPressed(lysa::KEY_UP)) {

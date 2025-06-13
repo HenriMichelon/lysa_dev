@@ -182,10 +182,10 @@ namespace app {
         // rotate the view
         if (any(currentState.lookDir != lysa::FLOAT2ZERO)) {
             const auto interpolatedLookDir = previousState.lookDir * (1.0f - alpha) + currentState.lookDir * alpha;
-            const auto yRot                = -interpolatedLookDir.x * 2.0f;
+            const auto yRot = -interpolatedLookDir.x * 1.0f;
             rotateY(yRot);
             cameraPivot->rotateX(interpolatedLookDir.y * keyboardInvertedAxisY);
-            cameraPivot->setRotationX(std::clamp(cameraPivot->getRotationX(), maxCameraAngleDown, maxCameraAngleUp));
+            // cameraPivot->setRotationX(std::clamp(cameraPivot->getRotationX(), maxCameraAngleDown, maxCameraAngleUp));
         }
     }
 
