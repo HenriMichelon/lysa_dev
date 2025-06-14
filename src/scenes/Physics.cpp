@@ -78,8 +78,11 @@ namespace app {
         lysa::AssetsPack::load(*floorScene, L"app://res/models/playground.assets");
         auto floorModel = floorScene->findFirstChild(L"Box001_asphalt_0");
         if (floorModel == nullptr) throw lysa::Exception("Floor not found");
+        auto floorPhysicsMaterial =
+            lysa::Application::getPhysicsEngine().createMaterial(0.09f, 0.08f, 20.0f);
         std::vector<lysa::SubShape> floorSubShapes;
-        floorSubShapes.push_back(lysa::SubShape{std::make_shared<lysa::ConvexHullShape>(floorModel)});
+        floorSubShapes.push_back(lysa::SubShape{
+            std::make_shared<lysa::ConvexHullShape>(floorModel, floorPhysicsMaterial)});
         // add virtual walls
         floorSubShapes.push_back(lysa::SubShape{
             std::make_shared<lysa::BoxShape>(lysa::float3{25.0, 10.0, 1.0}), lysa::float3{0.0, 5.0, -15.0}});
