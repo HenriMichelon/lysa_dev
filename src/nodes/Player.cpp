@@ -111,7 +111,7 @@ namespace app {
             // preserve the vertical velocity if we are in the air
             currentState.velocity = currentVerticalVelocity;
             // we can't escape gravity
-            currentState.velocity += lysa::Application::getPhysicsEngine().getGravity() * getUpVector() * delta;
+            currentState.velocity += getViewport()->getPhysicsScene().getGravity() * getUpVector() * delta;
         }
 
         // check if the player wants to move
