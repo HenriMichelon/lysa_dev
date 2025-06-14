@@ -79,7 +79,7 @@ namespace app {
         auto floorModel = floorScene->findFirstChild(L"Box001_asphalt_0");
         if (floorModel == nullptr) throw lysa::Exception("Floor not found");
         auto floorPhysicsMaterial =
-            lysa::Application::getPhysicsEngine().createMaterial(0.09f, 0.08f, 20.0f);
+            lysa::Application::getPhysicsEngine().createMaterial(0.5f, 0.5f, 0.5f);
         std::vector<lysa::SubShape> floorSubShapes;
         floorSubShapes.push_back(lysa::SubShape{
             std::make_shared<lysa::ConvexHullShape>(floorModel, floorPhysicsMaterial)});
