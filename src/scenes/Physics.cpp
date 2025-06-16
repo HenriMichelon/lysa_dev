@@ -50,15 +50,16 @@ namespace app {
         const auto crateScene = std::make_shared<Node>();
         lysa::AssetsPack::load(*crateScene, L"app://res/models/crate.assets");
         const auto &crateModel = crateScene->getChild(L"Crate");
-        for (int x = 0; x < 4; x++) {
-            for (int z = 0; z < 4; z++) {
-                const auto model = crateModel->duplicate();
-                auto body  = std::make_shared<Crate>();
-                body->addChild(model);
-                body->setPosition({x * 5 - 1.5 * 5, 1.0 + std::rand() % 5, -z * 5 + 5});
-                game->addChild(body);
-            }
-        }
+        // for (int x = 0; x < 4; x++) {
+        //     for (int z = 0; z < 4; z++) {
+        //         const auto model = crateModel->duplicate();
+        //         auto body  = std::make_shared<Crate>();
+        //         body->addChild(model);
+        //         body->setPosition({x * 5 - 1.5 * 5, 1.0 + std::rand() % 5, -z * 5 + 5});
+        //         game->addChild(body);
+        //         break;
+        //     }
+        // }
 
         // create the material to outline the crates in front of the player
         // auto& outlineMaterials = Application::get().getOutlineMaterials();
@@ -79,22 +80,23 @@ namespace app {
         auto floorModel = floorScene->findFirstChild(L"Box001_asphalt_0");
         if (floorModel == nullptr) throw lysa::Exception("Floor not found");
         auto floorPhysicsMaterial =
-            lysa::Application::getPhysicsEngine().createMaterial(0.5f, 0.5f, 0.5f);
+            lysa::Application::getPhysicsEngine().createMaterial(0.5f, 0.5f, 0.0f);
         std::vector<lysa::SubShape> floorSubShapes;
         floorSubShapes.push_back(lysa::SubShape{
             std::make_shared<lysa::ConvexHullShape>(floorModel, floorPhysicsMaterial)});
         // add virtual walls
-        floorSubShapes.push_back(lysa::SubShape{
-            std::make_shared<lysa::BoxShape>(lysa::float3{25.0, 10.0, 1.0}), lysa::float3{0.0, 5.0, -15.0}});
-        floorSubShapes.push_back(lysa::SubShape{
-            std::make_shared<lysa::BoxShape>(lysa::float3{25.0, 10.0, 1.0}), lysa::float3{0.0, 5.0, 15.0}});
-        floorSubShapes.push_back(lysa::SubShape{
-            std::make_shared<lysa::BoxShape>(lysa::float3{1.0, 10.0, 30.0}), lysa::float3{12.5, 5.0, 0.0}});
-        floorSubShapes.push_back(lysa::SubShape{
-            std::make_shared<lysa::BoxShape>(lysa::float3{1.0, 10.0, 30.0}), lysa::float3{-12.5, 5.0, 0.0}});
+        // floorSubShapes.push_back(lysa::SubShape{
+            // std::make_shared<lysa::BoxShape>(lysa::float3{25.0, 10.0, 1.0}), lysa::float3{0.0, 5.0, -15.0}});
+        // floorSubShapes.push_back(lysa::SubShape{
+            // std::make_shared<lysa::BoxShape>(lysa::float3{25.0, 10.0, 1.0}), lysa::float3{0.0, 5.0, 15.0}});
+        // floorSubShapes.push_back(lysa::SubShape{
+            // std::make_shared<lysa::BoxShape>(lysa::float3{1.0, 10.0, 30.0}), lysa::float3{12.5, 5.0, 0.0}});
+        // floorSubShapes.push_back(lysa::SubShape{
+            // std::make_shared<lysa::BoxShape>(lysa::float3{1.0, 10.0, 30.0}), lysa::float3{-12.5, 5.0, 0.0}});
         // the static body to make the floor collides with the player and the crates
         const auto floor = std::make_shared<lysa::StaticBody>(
-                make_shared<lysa::StaticCompoundShape>(floorSubShapes),
+                // make_shared<lysa::StaticCompoundShape>(floorSubShapes),
+                std::make_shared<lysa::BoxShape>(lysa::float3{50.0, 50.0, 0.5}),
                 WORLD,
                 L"Floor");
         floor->addChild(floorScene);
