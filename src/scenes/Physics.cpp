@@ -50,16 +50,16 @@ namespace app {
         const auto crateScene = std::make_shared<Node>();
         lysa::AssetsPack::load(*crateScene, L"app://res/models/crate.assets");
         const auto &crateModel = crateScene->getChild(L"Crate");
-        // for (int x = 0; x < 4; x++) {
-        //     for (int z = 0; z < 4; z++) {
-        //         const auto model = crateModel->duplicate();
-        //         auto body  = std::make_shared<Crate>();
-        //         body->addChild(model);
-        //         body->setPosition({x * 5 - 1.5 * 5, 1.0 + std::rand() % 5, -z * 5 + 5});
-        //         game->addChild(body);
-        //         break;
-        //     }
-        // }
+        for (int x = 0; x < 4; x++) {
+            for (int z = 0; z < 4; z++) {
+                const auto model = crateModel->duplicate();
+                auto body  = std::make_shared<Crate>();
+                body->addChild(model);
+                body->setPosition({x * 5 - 1.5 * 5, 1.0 + std::rand() % 5, -z * 5 + 5});
+                game->addChild(body);
+                break;
+            }
+        }
 
         // create the material to outline the crates in front of the player
         // auto& outlineMaterials = Application::get().getOutlineMaterials();

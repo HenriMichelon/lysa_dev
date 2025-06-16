@@ -9,6 +9,8 @@ export namespace app {
     public:
         void onReady() override;
 
+        void onPhysicsProcess(float deltaTime) override;
+
     private:
         void drawCube();
     };

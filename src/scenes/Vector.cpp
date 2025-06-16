@@ -7,6 +7,9 @@ namespace app {
     void VectorScene::onReady() {
         BaseScene::onReady();
         player->setPosition({0.0f,0.0f, 4.0f});
+    }
+
+    void VectorScene::onPhysicsProcess(float deltaTime) {
         drawCube();
     }
 
