@@ -79,7 +79,7 @@ namespace app {
         auto floorModel = floorScene->findFirstChild(L"Box001_asphalt_0");
         if (floorModel == nullptr) throw lysa::Exception("Floor not found");
         auto floorPhysicsMaterial =
-            lysa::Application::getPhysicsEngine().createMaterial(0.0f, 0.5f);
+            lysa::Application::getPhysicsEngine().createMaterial(0.8f, 0.8f);
         lysa::Application::getPhysicsEngine().setRestitutionCombineMode(floorPhysicsMaterial, lysa::CombineMode::MAX);
         std::vector<lysa::SubShape> floorSubShapes;
         floorSubShapes.push_back(lysa::SubShape{
