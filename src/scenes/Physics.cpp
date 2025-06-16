@@ -30,7 +30,7 @@ namespace app {
 
         // add the player
         player = std::make_shared<Player>();
-        player->setPosition({0.0f, 0.0f, 10.0f});
+        player->setPosition({0.0f, 5.0f, 10.0f});
         game->addChild(player);
 
         // add an optional spotlight
