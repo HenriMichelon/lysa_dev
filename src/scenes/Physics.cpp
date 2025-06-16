@@ -168,6 +168,10 @@ namespace app {
         // } else if (infoBox->isVisible()) {
         //     infoBox->hide();
         // }
+
+        if (lysa::Input::isKeyJustPressed(lysa::KEY_F1)) {
+            getViewport()->setDisplayDebug(!getViewport()->getDisplayDebug());
+        }
     }
 
     void PhysicsMainScene::onEnterScene() {

@@ -22,8 +22,8 @@ namespace app {
             },
         },
         .loggingMode{lysa::LOGGING_MODE_STDOUT},
-        .backend = vireo::Backend::VULKAN,
-        // .backend = vireo::Backend::DIRECTX,
+        // .backend = vireo::Backend::VULKAN,
+        .backend = vireo::Backend::DIRECTX,
         .resourcesConfig = {
             // .maxVertexInstances = 50000000,
             // .maxIndexInstances  = 20000000,
@@ -37,6 +37,18 @@ namespace app {
             .sceneConfig = {
                 // .maxVertexPerFramePerPipeline = 3000000
                 // .maxVertexPerFrame = 30000000
+            },
+            .debugConfig = {
+                .enabled = true,
+                .displayAtStartup = true,
+                .useDepthTesting = true,
+                .drawCoordinateSystem = false,
+                .coordinateSystemScale = 2.0f,
+                .drawShape = true,
+                .shapeWireframe = true,
+                .drawBoundingBox = false,
+                .drawVelocity = false,
+                .drawCenterOfMass = false,
             }
         },
         .renderingConfig = {
