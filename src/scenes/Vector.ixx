@@ -8,6 +8,9 @@ export namespace app {
     class VectorScene : public BaseScene {
     public:
         void onReady() override;
+
+    private:
+        void drawCube();
     };
 
 }
