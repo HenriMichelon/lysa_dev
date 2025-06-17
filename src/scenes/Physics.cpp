@@ -139,6 +139,7 @@ namespace app {
             // only if the player is not on top of a crate
             if ((!player->isGround(*collision.object) &&
                 (collision.normal.y < 0.8))) {
+                // lysa::GAME1("Collision with ", lysa::to_string(collision.object->getName()));
                 // push or pull the colliding crate in the colliding direction
                 if (pushing || pulling) {
                     (dynamic_cast<lysa::RigidBody*>(collision.object))->applyForce(
