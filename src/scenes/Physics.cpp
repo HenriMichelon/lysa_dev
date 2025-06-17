@@ -84,7 +84,7 @@ namespace app {
         auto floorModel = floorScene->findFirstChild(L"Box001_asphalt_0");
         if (floorModel == nullptr) throw lysa::Exception("Floor not found");
         auto floorPhysicsMaterial =
-            lysa::Application::getPhysicsEngine().createMaterial(0.8f, 0.5f);
+            lysa::Application::getPhysicsEngine().createMaterial(0.5f, 0.5f);
         lysa::Application::getPhysicsEngine().setRestitutionCombineMode(floorPhysicsMaterial, lysa::CombineMode::MAX);
         std::vector<lysa::SubShape> floorSubShapes;
         floorSubShapes.push_back(lysa::SubShape{
@@ -142,7 +142,7 @@ namespace app {
             // only if the player is not on top of a crate
             if ((!player->isGround(*collision.object) &&
                 (collision.normal.y < 0.8))) {
-                // lysa::GAME1("Collision with ", lysa::to_string(collision.object->getName()));
+                lysa::GAME1("Collision with ", lysa::to_string(collision.object->getName()));
 
                 // push or pull the colliding crate in the colliding direction
                 if (pushing || pulling) {

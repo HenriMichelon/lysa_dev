@@ -14,7 +14,7 @@ namespace app {
                 LAYERS_COUNT,
                 {
                    { PLAYER, { WORLD, BODIES, USABLE_PROP }},
-                   { BODIES, { WORLD, BODIES, PLAYER, USABLE_PROP }},
+                   { BODIES, { WORLD, BODIES, USABLE_PROP }},
                    { PLAYER_RAYCAST, { BODIES }},
                    { TRIGGERS, { PLAYER }},
                    { INTERACTIONS, { USABLE_PROP }},
