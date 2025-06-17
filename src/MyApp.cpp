@@ -40,7 +40,7 @@ namespace app {
             },
             .debugConfig = {
                 .enabled = true,
-                .displayAtStartup = true,
+                .displayAtStartup = false,
                 .useDepthTesting = true,
                 .drawCoordinateSystem = false,
                 .coordinateSystemScale = 2.0f,

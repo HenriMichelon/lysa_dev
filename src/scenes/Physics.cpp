@@ -50,6 +50,7 @@ namespace app {
         const auto crateScene = std::make_shared<Node>();
         lysa::AssetsPack::load(*crateScene, L"app://res/models/crate.assets");
         const auto &crateModel = crateScene->getChild(L"Crate");
+        std::shared_ptr<Node> first;
         for (int x = 0; x < 4; x++) {
             for (int z = 0; z < 4; z++) {
                 const auto model = crateModel->duplicate();
@@ -57,8 +58,12 @@ namespace app {
                 body->addChild(model);
                 body->setPosition({x * 5 - 1.5 * 5, 1.0 + std::rand() % 5, -z * 5 + 5});
                 game->addChild(body);
+                if (!first) {
+                    first = body;
+                }
             }
         }
+        first->scale(2.0f);
 
         // create the material to outline the crates in front of the player
         // auto& outlineMaterials = Application::get().getOutlineMaterials();
@@ -96,11 +101,9 @@ namespace app {
         // the static body to make the floor collides with the player and the crates
         const auto floor = std::make_shared<lysa::StaticBody>(
                 make_shared<lysa::StaticCompoundShape>(floorSubShapes),
-                // std::make_shared<lysa::BoxShape>(lysa::float3{50.0f, 0.5f, 50.0f}),
                 WORLD,
                 L"Floor");
         floor->addChild(floorScene);
-        // floor->setPosition({0.0f, 5.0f, 0.0f});
         game->addChild(floor);
 
         // connect the player signals for the "push" and "pull" actions
@@ -140,6 +143,7 @@ namespace app {
             if ((!player->isGround(*collision.object) &&
                 (collision.normal.y < 0.8))) {
                 // lysa::GAME1("Collision with ", lysa::to_string(collision.object->getName()));
+
                 // push or pull the colliding crate in the colliding direction
                 if (pushing || pulling) {
                     (dynamic_cast<lysa::RigidBody*>(collision.object))->applyForce(
@@ -214,5 +218,6 @@ namespace app {
     void PhysicsMainScene::onPushOrPull(Player::PushOrPullAction *action) {
         pushing = action->push;
         pulling = action->pull;
+        // lysa::GAME1("onPushOrPull");
     }
 }
