@@ -44,6 +44,7 @@ namespace app {
                 .useDepthTesting = true,
                 .drawCoordinateSystem = false,
                 .coordinateSystemScale = 2.0f,
+                .drawRayCast = true,
                 .drawShape = true,
                 .shapeWireframe = true,
                 .drawBoundingBox = false,

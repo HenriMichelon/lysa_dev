@@ -159,7 +159,7 @@ namespace app {
             // }
         }
         // clear all the previously colliding crates
-        // and disable the oulines off all colliding crates
+        // and disable the outlines off all colliding crates
         // for (const auto &collision : currentCollisions) {
         //     collision.object->findFirstChild<lysa::MeshInstance>()->setOutlined(false);
         // }
