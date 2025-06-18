@@ -199,7 +199,7 @@ namespace app {
         // menu->getWidget().add(textMouse, ui::Widget::TOP);
         // menu->setHeight(textJump->getHeight() + textMouse->getHeight() + menu->getWidget().getPadding() * 3);
         //
-        // // build the information box dispalyed when we collide a crate
+        // // build the information box displayed when we collide a crate
         // infoBox = make_shared<ui::Window>(ui::Rect{0, 800, 200, 100});
         // infoBox->hide();
         // Application::get().add(infoBox);

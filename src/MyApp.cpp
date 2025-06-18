@@ -41,12 +41,11 @@ namespace app {
             .debugConfig = {
                 .enabled = true,
                 .displayAtStartup = true,
-                .useDepthTesting = true,
+                .depthTestEnable = true,
                 .drawCoordinateSystem = false,
                 .coordinateSystemScale = 2.0f,
                 .drawRayCast = true,
                 .drawShape = true,
-                .shapeWireframe = true,
                 .drawBoundingBox = false,
                 .drawVelocity = false,
                 .drawCenterOfMass = false,
