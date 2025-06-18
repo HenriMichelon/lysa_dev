@@ -56,14 +56,14 @@ namespace app {
                 const auto model = crateModel->duplicate();
                 auto body  = std::make_shared<Crate>();
                 body->addChild(model);
-                body->setPosition({x * 5 - 1.5 * 5, 1.0 + std::rand() % 5, -z * 5 + 5});
+                body->setPosition({x * 5 - 1.5 * 5, 2.0 + std::rand() % 5, -z * 5 + 5});
                 game->addChild(body);
                 if (!first) {
                     first = body;
                 }
             }
         }
-        // first->scale(2.0f);
+        first->scale(2.0f);
         lysa::GAME1(first->getMass());
 
         // create the material to outline the crates in front of the player
@@ -108,7 +108,7 @@ namespace app {
         game->addChild(floor);
 
         // connect the player signals for the "push" and "pull" actions
-        player->connect(Player::on_push_pull, [this](void*p){this->onPushOrPull((Player::PushOrPullAction *)p);});
+        player->connect(Player::on_push, [this](){this->onPush();});
     }
 
     void PhysicsMainScene::onPhysicsProcess(float delta) {
@@ -121,10 +121,11 @@ namespace app {
                 // lysa::GAME1("Collision with ", lysa::to_string(collision.object->getName()));
 
                 // push or pull the colliding crate in the colliding direction
-                if (pushing || pulling) {
+                if (pushing) {
                     (dynamic_cast<lysa::RigidBody*>(collision.object))->addImpulse(
-                            force * collision.normal * (pushing ? -1.0f : 1.0f) ,
+                            force * collision.normal * -1.0f,
                             collision.position);
+                    pushing = false;
                 }
                 // outline the colliding crate
                 // const auto& meshInstance = collision.object->findFirstChild<lysa::MeshInstance>();
@@ -220,9 +221,8 @@ namespace app {
     }
 
     // signal handler called on a player action
-    void PhysicsMainScene::onPushOrPull(Player::PushOrPullAction *action) {
-        pushing = action->push;
-        pulling = action->pull;
+    void PhysicsMainScene::onPush() {
+        pushing = true;
         // lysa::GAME1("onPushOrPull");
     }
 }

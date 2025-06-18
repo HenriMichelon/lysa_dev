@@ -36,13 +36,6 @@ namespace app {
                 releaseMouse();
                 return true;
             }
-            // check if the player wants to pull or push a crate with O and P
-            auto params = PushOrPullAction{
-                    .push = (eventKey.getKey() == lysa::KEY_P) && eventKey.isPressed(),
-                    .pull = (eventKey.getKey() == lysa::KEY_O) && eventKey.isPressed()
-            };
-            // send the push/pull state to the scene
-            emit(on_push_pull, &params);
         }
         // if the mouse is captured, process the game pad events
         if ((event.getType() == lysa::InputEventType::GAMEPAD_BUTTON) && mouseCaptured) {
@@ -53,14 +46,10 @@ namespace app {
                 return true;
             }
             // check if the player wants to pull or push a crate with RL or RB
-            auto params = PushOrPullAction{
-                    .push = (eventGamepadButton.getGamepadButton() == lysa::GamepadButton::RB) && eventGamepadButton.
-                    isPressed(),
-                    .pull = (eventGamepadButton.getGamepadButton() == lysa::GamepadButton::LB) && eventGamepadButton.
-                    isPressed()
-            };
+            const auto push = (eventGamepadButton.getGamepadButton() == lysa::GamepadButton::RB) && eventGamepadButton.
+                    isPressed();
             // send the push/pull state to the scene
-            emit(on_push_pull, &params);
+            if (push) { emit(on_push); }
         }
         // continue to propagate the event
         return false;
@@ -156,6 +145,11 @@ namespace app {
             if (any(inputDir != lysa::FLOAT2ZERO)) {
                 currentState.lookDir = inputDir * viewSensitivity * delta;
             }
+        }
+
+        // send the push/pull state to the scene
+        if (lysa::Input::isKeyPressed(lysa::KEY_P)) {
+            emit(on_push);
         }
     }
 
@@ -263,6 +257,6 @@ namespace app {
         cameraCollisionCounter = cameraCollisionCounterMax;
     }
 
-    const lysa::Signal::signal Player::on_push_pull = "on_push_pull";
+    const lysa::Signal::signal Player::on_push = "on_push";
 
 }

@@ -8,13 +8,7 @@ export namespace app {
     class Player : public lysa::Character {
     public:
         // signal emmited on user interaction
-        static const lysa::Signal::signal on_push_pull;
-
-        // parameters for the above signal
-        struct PushOrPullAction {
-            bool push; // player want to push a crate
-            bool pull; // player want to pull a crate
-        };
+        static const lysa::Signal::signal on_push;
 
         Player();
 

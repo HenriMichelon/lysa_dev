@@ -46,12 +46,11 @@ export namespace app {
         // list a colliding crate to reset the outline materials
         std::list<lysa::CollisionObject::Collision> currentCollisions;
 
-        // player actions: push or pull a crate
+        // player actions: push a crate
         bool pushing{false};
-        bool pulling{false};
 
         // a signal handler called on a player action
-        void onPushOrPull(Player::PushOrPullAction *action);
+        void onPush();
     };
 
 }
