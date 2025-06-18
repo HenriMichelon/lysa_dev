@@ -30,7 +30,7 @@ namespace app {
     }
 
     void AddRemove::removeNode() {
-        if (removeChild(nodes.back())) { nodes.pop_back(); }
+        if (!nodes.empty() && removeChild(nodes.back())) { nodes.pop_back(); }
     }
 
     void AddRemove::toggleVisibility() {

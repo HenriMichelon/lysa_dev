@@ -67,12 +67,8 @@ namespace app {
         lysa::GAME1(first->getMass());
 
         // create the material to outline the crates in front of the player
-        // auto& outlineMaterials = Application::get().getOutlineMaterials();
-        // raycastOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(outlineMaterials.get(0));
-        // raycastOutlineMaterial->setParameter(0, {1.0, 0.0, 0.0, 1.0});
-        // raycastOutlineMaterial->setParameter(1, vec4{0.005});
-        // outlineMaterials.add(raycastOutlineMaterial);
-        //
+        raycastOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(L"highlight.frag");
+
         // // create material to outline the crate in collision with the player
         // collisionOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(outlineMaterials.get(0));
         // collisionOutlineMaterial->setParameter(0, {0.0, 1.0, 0.0, 1.0});
@@ -146,16 +142,17 @@ namespace app {
             // }
             previousSelection = nullptr;
         }
-        // detect if a crate is in front on the player
+        // detect if a crate is in front of the player
         if (raycast->isColliding()) {
-            const auto& collider = *(raycast->getCollider());
-            const auto& meshInstance = collider.findFirstChild<lysa::MeshInstance>();
-            // if not already outlined activate and set the outline material
+            const auto& collider = raycast->getCollider();
+            const auto& meshInstance = collider->findFirstChild<lysa::MeshInstance>();
+            // if not already outlined, activate and set the outline material
             // if (!meshInstance->isOutlined()) {
-            //     meshInstance->setOutlined(true);
-            //     meshInstance->setOutlineMaterial(raycastOutlineMaterial);
-            //     previousSelection = meshInstance;
-            //     //log("Collide ", meshInstance->toString(), " ",  to_string(meshInstance->getId()));
+                removeChild(collider);
+                meshInstance->getMesh()->setSurfaceMaterial(0, raycastOutlineMaterial);
+                addChild(collider);
+                previousSelection = meshInstance;
+                lysa::GAME1("Collide ", lysa::to_string(meshInstance->getName()));
             // }
         }
         // clear all the previously colliding crates

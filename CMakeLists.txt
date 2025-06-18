@@ -55,6 +55,7 @@ set(SHADERS_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/shaders)
 # Slang shaders
 file(MAKE_DIRECTORY ${SHADERS_BUILD_DIR})
 set(SHADERS_SOURCE_FILES
+        "${SHADERS_SRC_DIR}/highlight.frag.slang"
         "${SHADERS_SRC_DIR}/scale.vert.slang"
         "${SHADERS_SRC_DIR}/uv_gradient.frag.slang"
 )
