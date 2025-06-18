@@ -149,7 +149,7 @@ namespace app {
             // if not already outlined, activate and set the outline material
             // if (!meshInstance->isOutlined()) {
                 removeChild(collider);
-                meshInstance->getMesh()->setSurfaceMaterial(0, raycastOutlineMaterial);
+                meshInstance->setSurfaceOverrideMaterial(0, raycastOutlineMaterial);
                 addChild(collider);
                 previousSelection = meshInstance;
                 lysa::GAME1("Collide ", lysa::to_string(meshInstance->getName()));
