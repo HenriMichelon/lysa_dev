@@ -95,9 +95,14 @@ namespace app {
 
             std::wstring title{L"LysaGame"};
             if (appConfig.backend == vireo::Backend::VULKAN) {
-                title.append(L" (Vulkan)");
+                title.append(L" (Vulkan,");
             } else {
-                title.append(L" (DirectX)");
+                title.append(L" (DirectX,");
+            }
+            if (lysa::PhysicsEngine::getEngineType() == lysa::PhysicsEngineType::JOLT) {
+                title.append(L" Jolt)");
+            } else {
+                title.append(L" PhysX)");
             }
             windowConfig.title = title;
             // windowConfig.x = 100;

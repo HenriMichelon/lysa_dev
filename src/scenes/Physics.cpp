@@ -50,7 +50,7 @@ namespace app {
         const auto crateScene = std::make_shared<Node>();
         lysa::AssetsPack::load(*crateScene, L"app://res/models/crate.assets");
         const auto &crateModel = crateScene->getChild(L"Crate");
-        std::shared_ptr<Node> first;
+        std::shared_ptr<Crate> first;
         for (int x = 0; x < 4; x++) {
             for (int z = 0; z < 4; z++) {
                 const auto model = crateModel->duplicate();
@@ -63,7 +63,8 @@ namespace app {
                 }
             }
         }
-        first->scale(2.0f);
+        // first->scale(2.0f);
+        lysa::GAME1(first->getMass());
 
         // create the material to outline the crates in front of the player
         // auto& outlineMaterials = Application::get().getOutlineMaterials();
@@ -110,6 +111,31 @@ namespace app {
         player->connect(Player::on_push_pull, [this](void*p){this->onPushOrPull((Player::PushOrPullAction *)p);});
     }
 
+    void PhysicsMainScene::onPhysicsProcess(float delta) {
+        currentCollisions.clear();
+        // detect all the colliding crates
+        for (const auto &collision : player->getCollisions()) {
+            // only if the player is not on top of a crate
+            if ((!player->isGround(*collision.object) &&
+                (collision.normal.y < 0.8))) {
+                // lysa::GAME1("Collision with ", lysa::to_string(collision.object->getName()));
+
+                // push or pull the colliding crate in the colliding direction
+                if (pushing || pulling) {
+                    (dynamic_cast<lysa::RigidBody*>(collision.object))->addImpulse(
+                            force * collision.normal * (pushing ? -1.0f : 1.0f) ,
+                            collision.position);
+                }
+                // outline the colliding crate
+                // const auto& meshInstance = collision.object->findFirstChild<lysa::MeshInstance>();
+                // meshInstance->setOutlined(true);
+                // meshInstance->setOutlineMaterial(collisionOutlineMaterial);
+                // save the colliding crate to disable the outline during the next frame
+                currentCollisions.push_back(collision);
+                }
+        }
+    }
+
     void PhysicsMainScene::onProcess(float alpha) {
         // if a crate is already selected (and optionally outlined) from the previous frame,
         // deselect it for the current frame
@@ -136,28 +162,7 @@ namespace app {
         // for (const auto &collision : currentCollisions) {
         //     collision.object->findFirstChild<lysa::MeshInstance>()->setOutlined(false);
         // }
-        currentCollisions.clear();
-        // detect all the colliding crates
-        for (const auto &collision : player->getCollisions()) {
-            // only if the player is not on top of a crate
-            if ((!player->isGround(*collision.object) &&
-                (collision.normal.y < 0.8))) {
-                lysa::GAME1("Collision with ", lysa::to_string(collision.object->getName()));
 
-                // push or pull the colliding crate in the colliding direction
-                if (pushing || pulling) {
-                    (dynamic_cast<lysa::RigidBody*>(collision.object))->applyForce(
-                            force * collision.normal * (pushing ? -1.0f : 1.0f),
-                            collision.position);
-                }
-                // outline the colliding crate
-                // const auto& meshInstance = collision.object->findFirstChild<lysa::MeshInstance>();
-                // meshInstance->setOutlined(true);
-                // meshInstance->setOutlineMaterial(collisionOutlineMaterial);
-                // save the colliding crate to disable the outline during the next frame
-                currentCollisions.push_back(collision);
-            }
-        }
         // if we have collisions we display an information box for the first colliding crate
         // if (!currentCollisions.empty()) {
         //     // only change the info box content if not already displayed

@@ -9,6 +9,7 @@ namespace app {
     //         std::make_shared<lysa::ConvexHullShape>(body),
     //         BODIES,
     //         L"CrateBody"} {
+        // setDensity(400.0f);
     // }
 
     Crate::Crate():
@@ -16,6 +17,7 @@ namespace app {
             std::make_shared<lysa::BoxShape>(lysa::float3{2.0f, 2.0f, 2.0f}),
             BODIES,
             L"CrateBody"} {
+        setDensity(400.0f);
     }
 
 }

@@ -15,13 +15,15 @@ export namespace app {
 
         void onProcess(float alpha) override;
 
+        void onPhysicsProcess(float delta) override;
+
         void onEnterScene() override;
 
         void onExitScene() override;
 
     private:
         // force used when pulling or pushing a crate
-        const lysa::float3 force = lysa::float3{7500.0f};
+        const lysa::float3 force = lysa::float3{500.0f};
 
         // scene menu
         // std::shared_ptr<ui::Window> menu;
