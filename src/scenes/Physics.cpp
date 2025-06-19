@@ -137,24 +137,20 @@ namespace app {
     void PhysicsMainScene::onProcess(float alpha) {
         // if a crate is already selected (and optionally outlined) from the previous frame,
         // deselect it for the current frame
-        if (previousSelection != nullptr) {
-            // if (previousSelection->getOutlineMaterial() == raycastOutlineMaterial) {
-            //     previousSelection->setOutlined(false);
-            // }
-            previousSelection = nullptr;
-        }
-        // detect if a crate is in front of the player
+        // detects if a crate is in front of the player
         if (rayCast->isColliding()) {
             const auto& collider = rayCast->getCollider();
             const auto& meshInstance = collider->findFirstChild<lysa::MeshInstance>();
-            // if not already outlined, activate and set the outline material
-            if (meshInstance->getSurfaceOverrideMaterial(0) != rayCastOutlineMaterial) {
-                removeChild(collider);
+            if (meshInstance != previousSelection) {
                 meshInstance->setSurfaceOverrideMaterial(0, rayCastOutlineMaterial);
-                addChild(collider);
+                if (previousSelection) {
+                    previousSelection->setSurfaceOverrideMaterial(0, nullptr);
+                }
                 previousSelection = meshInstance;
-                // lysa::GAME1("Collide ", lysa::to_string(meshInstance->getName()));
             }
+        } else if (previousSelection != nullptr) {
+            previousSelection->setSurfaceOverrideMaterial(0, nullptr);
+            previousSelection = nullptr;
         }
         // clear all the previously colliding crates
         // and disable the outlines off all colliding crates
