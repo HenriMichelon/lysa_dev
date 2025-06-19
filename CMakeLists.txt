@@ -67,7 +67,7 @@ add_custom_target(shaders_copy
         COMMENT "Copying Lysa shaders"
         VERBATIM
 )
-add_dependencies(shaders_copy ${LYSA_TARGET} lysa_shaders)
+add_dependencies(shaders_copy ${LYSA_TARGET})
 
 #######################################################
 # Common files

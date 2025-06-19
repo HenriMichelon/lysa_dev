@@ -53,7 +53,9 @@ namespace app {
         },
         .renderingConfig = {
             // .rendererType = lysa::RendererType::FORWARD,
+            // .depthStencilFormat = vireo::ImageFormat::D32_SFLOAT,
             .rendererType = lysa::RendererType::DEFERRED,
+            .depthStencilFormat = vireo::ImageFormat::D32_SFLOAT_S8_UINT,
             .presentMode = vireo::PresentMode::IMMEDIATE,
             .clearColor = lysa::float3{0.0f, 0.2f, 0.4f},
         },
@@ -96,14 +98,19 @@ namespace app {
 
             std::wstring title{L"LysaGame"};
             if (appConfig.backend == vireo::Backend::VULKAN) {
-                title.append(L" (Vulkan,");
+                title.append(L" (Vulkan ");
             } else {
-                title.append(L" (DirectX,");
+                title.append(L" (DirectX ");
+            }
+            if (windowConfig.renderingConfig.rendererType == lysa::RendererType::FORWARD) {
+                title.append(L"Forward,");
+            } else {
+                title.append(L"Deferred, ");
             }
             if (lysa::PhysicsEngine::getEngineType() == lysa::PhysicsEngineType::JOLT) {
-                title.append(L" Jolt)");
+                title.append(L"Jolt)");
             } else {
-                title.append(L" PhysX)");
+                title.append(L"PhysX)");
             }
             windowConfig.title = title;
             // windowConfig.x = 100;
