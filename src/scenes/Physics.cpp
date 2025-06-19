@@ -70,7 +70,7 @@ namespace app {
         rayCastOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(L"highlight.frag");
         rayCastOutlineMaterial->setParameter(0, {.4, .4, 0.05, 0.0});
 
-        // // create material to outline the crate collinding with the player
+        // // create material to outline the crate colliding with the player
         collisionOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(L"highlight.frag");
         collisionOutlineMaterial->setParameter(0, {0.0, .2, 0.0, 0.0});
 
