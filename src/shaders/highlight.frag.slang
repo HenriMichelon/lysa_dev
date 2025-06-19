@@ -7,6 +7,7 @@
 #include "lighting.inc.slang"
 
 float4 fragmentMain(VertexOutput input) : SV_TARGET {
+    float4 color = getColor(input, input.meshSurfaceMaterialIndex);
     Material mat = materials[input.materialIndex];
-    return mat.parameters[0];
+    return color + mat.parameters[0];
 }

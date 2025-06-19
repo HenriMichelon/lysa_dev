@@ -68,11 +68,11 @@ namespace app {
 
         // create the material to outline the crates in front of the player
         rayCastOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(L"highlight.frag");
-        rayCastOutlineMaterial->setParameter(0, {.8, .8, 0.2, 1.0});
+        rayCastOutlineMaterial->setParameter(0, {.4, .4, 0.05, 0.0});
 
         // // create material to outline the crate collinding with the player
         collisionOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(L"highlight.frag");
-        collisionOutlineMaterial->setParameter(0, {0.0, 1.0, 0.0, 1.0});
+        collisionOutlineMaterial->setParameter(0, {0.0, .2, 0.0, 0.0});
 
         // build the scene floor node and associated static body
         const auto floorScene = std::make_shared<Node>();
