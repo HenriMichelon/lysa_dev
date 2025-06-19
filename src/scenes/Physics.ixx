@@ -30,9 +30,9 @@ export namespace app {
         // ou player node
         std::shared_ptr<Player> player;
         // raycast used to outline the crate in front of the player
-        std::shared_ptr<lysa::RayCast> raycast;
+        std::shared_ptr<lysa::RayCast> rayCast;
         // material for the selection outline
-        std::shared_ptr<lysa::ShaderMaterial> raycastOutlineMaterial;
+        std::shared_ptr<lysa::ShaderMaterial> rayCastOutlineMaterial;
         // used to save the currently selected crate to disable the outline
         std::shared_ptr<lysa::MeshInstance> previousSelection{nullptr};
         // information box used when the player collides with a crate

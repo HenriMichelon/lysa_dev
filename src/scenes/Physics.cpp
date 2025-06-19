@@ -42,9 +42,9 @@ namespace app {
         // player->addChild(spotLight1);
 
         // raycast used to detect crates in front of the player
-        raycast = std::make_shared<lysa::RayCast>(lysa::AXIS_FRONT * 50.0f, PLAYER_RAYCAST);
-        raycast->setPosition({0.0f, 0.5f, 0.0f});
-        player->addChild(raycast);
+        rayCast = std::make_shared<lysa::RayCast>(lysa::AXIS_FRONT * 50.0f, PLAYER_RAYCAST);
+        rayCast->setPosition({0.0f, 0.5f, 0.0f});
+        player->addChild(rayCast);
 
         // generates crates nodes with random positions
         const auto crateScene = std::make_shared<Node>();
@@ -67,7 +67,8 @@ namespace app {
         lysa::GAME1(first->getMass());
 
         // create the material to outline the crates in front of the player
-        raycastOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(L"highlight.frag");
+        rayCastOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(L"highlight.frag");
+        rayCastOutlineMaterial->setParameter(0, {.8, .8, 0.2, 1.0});
 
         // // create material to outline the crate in collision with the player
         // collisionOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(outlineMaterials.get(0));
@@ -104,7 +105,7 @@ namespace app {
         game->addChild(floor);
 
         // connect the player signals for the "push" and "pull" actions
-        player->connect(Player::on_push, [this](){this->onPush();});
+        player->connect(Player::on_push, [this] {this->onPush();});
     }
 
     void PhysicsMainScene::onPhysicsProcess(float delta) {
@@ -143,17 +144,17 @@ namespace app {
             previousSelection = nullptr;
         }
         // detect if a crate is in front of the player
-        if (raycast->isColliding()) {
-            const auto& collider = raycast->getCollider();
+        if (rayCast->isColliding()) {
+            const auto& collider = rayCast->getCollider();
             const auto& meshInstance = collider->findFirstChild<lysa::MeshInstance>();
             // if not already outlined, activate and set the outline material
-            // if (!meshInstance->isOutlined()) {
+            if (meshInstance->getSurfaceOverrideMaterial(0) != rayCastOutlineMaterial) {
                 removeChild(collider);
-                meshInstance->setSurfaceOverrideMaterial(0, raycastOutlineMaterial);
+                meshInstance->setSurfaceOverrideMaterial(0, rayCastOutlineMaterial);
                 addChild(collider);
                 previousSelection = meshInstance;
-                lysa::GAME1("Collide ", lysa::to_string(meshInstance->getName()));
-            // }
+                // lysa::GAME1("Collide ", lysa::to_string(meshInstance->getName()));
+            }
         }
         // clear all the previously colliding crates
         // and disable the outlines off all colliding crates

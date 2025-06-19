@@ -112,14 +112,14 @@ namespace app {
     }
 
     void TrianglesScene::onMenuShader() {
-        removeChild(triangle1);
+        // removeChild(triangle1);
         // toggle material of the right triangle
-        if (triangle1->getMesh()->getSurfaceMaterial(0).get() == material1.get()) {
-            triangle1->getMesh()->setSurfaceMaterial(0, material2);
+        if (triangle1->getSurfaceMaterial(0).get() == material1.get()) {
+            triangle1->setSurfaceMaterial(0, material2);
         } else {
-            triangle1->getMesh()->setSurfaceMaterial(0, material1);
+            triangle1->setSurfaceMaterial(0, material1);
         }
-        addChild(triangle1);
+        // addChild(triangle1);
     }
 
 }
