@@ -70,11 +70,9 @@ namespace app {
         rayCastOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(L"highlight.frag");
         rayCastOutlineMaterial->setParameter(0, {.8, .8, 0.2, 1.0});
 
-        // // create material to outline the crate in collision with the player
-        // collisionOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(outlineMaterials.get(0));
-        // collisionOutlineMaterial->setParameter(0, {0.0, 1.0, 0.0, 1.0});
-        // collisionOutlineMaterial->setParameter(1, vec4{0.02});
-        // outlineMaterials.add(collisionOutlineMaterial);
+        // // create material to outline the crate collinding with the player
+        collisionOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(L"highlight.frag");
+        collisionOutlineMaterial->setParameter(0, {0.0, 1.0, 0.0, 1.0});
 
         // build the scene floor node and associated static body
         const auto floorScene = std::make_shared<Node>();
@@ -104,19 +102,21 @@ namespace app {
         floor->addChild(floorScene);
         game->addChild(floor);
 
-        // connect the player signals for the "push" and "pull" actions
-        player->connect(Player::on_push, [this] {this->onPush();});
+        // connect the player signals for the "push" action
+        player->connect(Player::on_push, [this] {pushing = true;});
     }
 
     void PhysicsMainScene::onPhysicsProcess(float delta) {
-        currentCollisions.clear();
+        // currentCollisions.clear();
+        // for (const auto &collision : currentCollisions) {
+            // collision.object->findFirstChild<lysa::MeshInstance>()->setSurfaceOverrideMaterial(0, nullptr);
+        // }
         // detect all the colliding crates
+        std::unordered_set<std::shared_ptr<lysa::MeshInstance>> newCollisions;
         for (const auto &collision : player->getCollisions()) {
             // only if the player is not on top of a crate
             if ((!player->isGround(*collision.object) &&
                 (collision.normal.y < 0.8))) {
-                // lysa::GAME1("Collision with ", lysa::to_string(collision.object->getName()));
-
                 // push or pull the colliding crate in the colliding direction
                 if (pushing) {
                     (dynamic_cast<lysa::RigidBody*>(collision.object))->addImpulse(
@@ -125,13 +125,20 @@ namespace app {
                     pushing = false;
                 }
                 // outline the colliding crate
-                // const auto& meshInstance = collision.object->findFirstChild<lysa::MeshInstance>();
-                // meshInstance->setOutlined(true);
-                // meshInstance->setOutlineMaterial(collisionOutlineMaterial);
-                // save the colliding crate to disable the outline during the next frame
-                currentCollisions.push_back(collision);
+                const auto meshInstance = collision.object->findFirstChild<lysa::MeshInstance>();
+                if (meshInstance->getSurfaceOverrideMaterial(0) != collisionOutlineMaterial) {
+                    meshInstance->setSurfaceOverrideMaterial(0, collisionOutlineMaterial);
                 }
+                // save the colliding crate to disable the outline during the next frame
+                newCollisions.insert(meshInstance);
+            }
         }
+        for (const auto &meshInstance : currentCollisions) {
+            if (!newCollisions.contains(meshInstance) && meshInstance->getSurfaceOverrideMaterial(0) == collisionOutlineMaterial) {
+                meshInstance->setSurfaceOverrideMaterial(0, nullptr);
+            }
+        }
+        currentCollisions = newCollisions;
     }
 
     void PhysicsMainScene::onProcess(float alpha) {
@@ -142,21 +149,20 @@ namespace app {
             const auto& collider = rayCast->getCollider();
             const auto& meshInstance = collider->findFirstChild<lysa::MeshInstance>();
             if (meshInstance != previousSelection) {
-                meshInstance->setSurfaceOverrideMaterial(0, rayCastOutlineMaterial);
-                if (previousSelection) {
+                if (meshInstance->getSurfaceOverrideMaterial(0) == nullptr) {
+                    meshInstance->setSurfaceOverrideMaterial(0, rayCastOutlineMaterial);
+                }
+                if (previousSelection && (previousSelection->getSurfaceOverrideMaterial(0) == rayCastOutlineMaterial)) {
                     previousSelection->setSurfaceOverrideMaterial(0, nullptr);
                 }
                 previousSelection = meshInstance;
             }
         } else if (previousSelection != nullptr) {
-            previousSelection->setSurfaceOverrideMaterial(0, nullptr);
+            if (previousSelection->getSurfaceOverrideMaterial(0) == rayCastOutlineMaterial) {
+                previousSelection->setSurfaceOverrideMaterial(0, nullptr);
+            }
             previousSelection = nullptr;
         }
-        // clear all the previously colliding crates
-        // and disable the outlines off all colliding crates
-        // for (const auto &collision : currentCollisions) {
-        //     collision.object->findFirstChild<lysa::MeshInstance>()->setOutlined(false);
-        // }
 
         // if we have collisions we display an information box for the first colliding crate
         // if (!currentCollisions.empty()) {
@@ -214,9 +220,4 @@ namespace app {
         // Application::get().remove(infoBox);
     }
 
-    // signal handler called on a player action
-    void PhysicsMainScene::onPush() {
-        pushing = true;
-        // lysa::GAME1("onPushOrPull");
-    }
 }

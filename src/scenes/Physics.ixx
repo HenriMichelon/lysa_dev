@@ -44,13 +44,11 @@ export namespace app {
         // outline material for colliding crates
         std::shared_ptr<lysa::ShaderMaterial> collisionOutlineMaterial;
         // list a colliding crate to reset the outline materials
-        std::list<lysa::CollisionObject::Collision> currentCollisions;
+        std::unordered_set<std::shared_ptr<lysa::MeshInstance>> currentCollisions;
 
         // player actions: push a crate
         bool pushing{false};
-
-        // a signal handler called on a player action
-        void onPush();
+;
     };
 
 }
