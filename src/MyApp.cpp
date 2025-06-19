@@ -39,7 +39,7 @@ namespace app {
                 // .maxVertexPerFrame = 30000000
             },
             .debugConfig = {
-                .enabled = true,
+                .enabled = false,
                 .displayAtStartup = false,
                 .depthTestEnable = true,
                 .drawCoordinateSystem = false,
@@ -52,6 +52,8 @@ namespace app {
             }
         },
         .renderingConfig = {
+            // .rendererType = lysa::RendererType::FORWARD,
+            .rendererType = lysa::RendererType::DEFERRED,
             .presentMode = vireo::PresentMode::IMMEDIATE,
             .clearColor = lysa::float3{0.0f, 0.2f, 0.4f},
         },
