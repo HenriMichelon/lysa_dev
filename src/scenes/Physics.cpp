@@ -11,6 +11,8 @@ namespace app {
     }
 
     void PhysicsMainScene::onReady() {
+        getViewport()->getWindow().addPostprocessing(L"gamma_correction", &gammaCorrectionData, sizeof(gammaCorrectionData));
+
         // make the scene node not pauseable
         setProcessMode(lysa::ProcessMode::ALWAYS);
         // add the global environment

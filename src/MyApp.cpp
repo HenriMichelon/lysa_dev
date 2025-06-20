@@ -22,8 +22,8 @@ namespace app {
             },
         },
         .loggingMode{lysa::LOGGING_MODE_STDOUT},
-        // .backend = vireo::Backend::VULKAN,
-        .backend = vireo::Backend::DIRECTX,
+        .backend = vireo::Backend::VULKAN,
+        // .backend = vireo::Backend::DIRECTX,
         .resourcesConfig = {
             // .maxVertexInstances = 50000000,
             // .maxIndexInstances  = 20000000,
@@ -52,10 +52,10 @@ namespace app {
             }
         },
         .renderingConfig = {
-            .rendererType = lysa::RendererType::FORWARD,
-            .depthStencilFormat = vireo::ImageFormat::D32_SFLOAT,
-            // .rendererType = lysa::RendererType::DEFERRED,
-            // .depthStencilFormat = vireo::ImageFormat::D32_SFLOAT_S8_UINT,
+            // .rendererType = lysa::RendererType::FORWARD,
+            // .depthStencilFormat = vireo::ImageFormat::D32_SFLOAT,
+            .rendererType = lysa::RendererType::DEFERRED,
+            .depthStencilFormat = vireo::ImageFormat::D32_SFLOAT_S8_UINT,
             .presentMode = vireo::PresentMode::IMMEDIATE,
             .clearColor = lysa::float3{0.0f, 0.2f, 0.4f},
         },
@@ -73,7 +73,7 @@ namespace app {
     class MyWindow : public lysa::Window {
     public:
         MyWindow() :
-        Window{windowConfig, std::make_shared<PhysicsMainScene>()} {
+        Window{windowConfig, std::make_shared<ViewAssetsScene>()} {
             // viewport2Config.viewport.x = (getExtent().width - viewport2Config.viewport.width)/2;
             // viewport2 = addViewport(std::make_shared<lysa::Viewport>(viewport2Config));
             // viewport2->setRootNode(std::make_shared<ViewAssetsScene>());

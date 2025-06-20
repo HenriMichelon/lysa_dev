@@ -25,6 +25,10 @@ export namespace app {
         // force used when pulling or pushing a crate
         const lysa::float3 force = lysa::float3{500.0f};
 
+        struct {
+            float gamma{2.4f};
+        } gammaCorrectionData;
+
         // scene menu
         // std::shared_ptr<ui::Window> menu;
         // ou player node
