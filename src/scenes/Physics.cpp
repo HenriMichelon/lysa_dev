@@ -109,10 +109,6 @@ namespace app {
     }
 
     void PhysicsMainScene::onPhysicsProcess(float delta) {
-        // currentCollisions.clear();
-        // for (const auto &collision : currentCollisions) {
-            // collision.object->findFirstChild<lysa::MeshInstance>()->setSurfaceOverrideMaterial(0, nullptr);
-        // }
         // detect all the colliding crates
         std::unordered_set<std::shared_ptr<lysa::MeshInstance>> newCollisions;
         for (const auto &collision : player->getCollisions()) {
