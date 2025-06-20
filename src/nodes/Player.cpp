@@ -3,7 +3,6 @@ module nodes.player;
 namespace app {
 
     Player::Player():
-        // the player has a physics body for the collisions
         Character{
             1.8, 0.5,
             PLAYER,
@@ -58,20 +57,20 @@ namespace app {
     void Player::onPhysicsProcess(const float delta) {
         // In case of a collision we move the camera on top of the player head
         // to have a closer view of the colliding object
-        if ((cameraCollisionTarget != nullptr) && ((cameraInTween == nullptr) || (!cameraInTween->isRunning()))) {
-            const auto pos  = cameraAttachment->getPosition();
-            const auto dest = lysa::float3{0.0f, 0.0f, -pos.z};
-            if (any(cameraPivot->getPosition() != dest)) {
-                // we use a tween for a smooth camera movement
-                cameraInTween = cameraPivot->createPropertyTween(
-                        (lysa::PropertyTween<lysa::float3>::Setter)(&Node::setPosition),
-                        cameraPivot->getPosition(),
-                        dest,
-                        0.5f);
-                // stop a possible existing tween to avoid movement collision
-                cameraPivot->killTween(cameraOutTween);
-            }
-        }
+        // if ((cameraCollisionTarget != nullptr) && ((cameraInTween == nullptr) || (!cameraInTween->isRunning()))) {
+        //     const auto pos  = cameraAttachment->getPosition();
+        //     const auto dest = lysa::float3{0.0f, 0.0f, -pos.z};
+        //     if (any(cameraPivot->getPosition() != dest)) {
+        //         // we use a tween for a smooth camera movement
+        //         cameraInTween = cameraPivot->createPropertyTween(
+        //                 (lysa::PropertyTween<lysa::float3>::Setter)(&Node::setPosition),
+        //                 cameraPivot->getPosition(),
+        //                 dest,
+        //                 0.5f);
+        //         // stop a possible existing tween to avoid movement collision
+        //         cameraPivot->killTween(cameraOutTween);
+        //     }
+        // }
 
         // reset the movement states
         previousState = currentState;
@@ -157,20 +156,20 @@ namespace app {
         // If the camera is on top of the player's head
         // and there is no more camera view collision,
         // we move the camera backward
-        if ((cameraCollisionTarget != nullptr) && (!cameraCollisionSensor->wereInContact(cameraCollisionTarget))) {
-            cameraCollisionCounter -= 1;
-            if (cameraCollisionCounter == 0) {
-                // we use a tween for a smooth camera movement
-                cameraOutTween = cameraPivot->createPropertyTween(
-                        (lysa::PropertyTween<lysa::float3>::Setter)(&Node::setPosition),
-                        cameraPivot->getPosition(),
-                        lysa::FLOAT3ZERO,
-                        0.5f);
-                // stop a possible existing tween to avoid movement collision
-                cameraPivot->killTween(cameraInTween);
-                cameraCollisionTarget = nullptr;
-            }
-        }
+        // if ((cameraCollisionTarget != nullptr) && (!cameraCollisionSensor->wereInContact(cameraCollisionTarget))) {
+        //     cameraCollisionCounter -= 1;
+        //     if (cameraCollisionCounter == 0) {
+        //         // we use a tween for a smooth camera movement
+        //         cameraOutTween = cameraPivot->createPropertyTween(
+        //                 (lysa::PropertyTween<lysa::float3>::Setter)(&Node::setPosition),
+        //                 cameraPivot->getPosition(),
+        //                 lysa::FLOAT3ZERO,
+        //                 0.5f);
+        //         // stop a possible existing tween to avoid movement collision
+        //         cameraPivot->killTween(cameraInTween);
+        //         cameraCollisionTarget = nullptr;
+        //     }
+        // }
 
         setVelocity(previousState.velocity * (1.0f - alpha) + currentState.velocity * alpha);
         // rotate the view
@@ -204,6 +203,7 @@ namespace app {
         if (cameraCollisions) {
              cameraCollisionSensor = std::make_shared<lysa::CollisionArea>(
                     std::make_shared<lysa::SphereShape>(0.25f),
+                    // std::make_shared<lysa::BoxShape>(lysa::float3{1.0f, 1.0f, 1.0f }),
                     WORLD | BODIES,
                     L"cameraCollisionNode"
                     );
@@ -212,7 +212,7 @@ namespace app {
                                            [this](void*p){this->onCameraCollision((const Collision *)p);});
             cameraCollisionSensor->connect(on_collision_persists,
                                            [this](void*p){this->onCameraCollision((const Collision *)p);});
-            // cameraAttachment->addChild(cameraCollisionSensor);
+            cameraAttachment->addChild(cameraCollisionSensor);
         }
 
         // create the pivot used to rotate the camera

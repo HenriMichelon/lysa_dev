@@ -7,7 +7,7 @@ export namespace app {
 
     class Player : public lysa::Character {
     public:
-        // signal emmited on user interaction
+        // signal emitted on user interaction
         static const lysa::Signal::signal on_push;
 
         Player();
@@ -48,7 +48,7 @@ export namespace app {
         const float jumpSpeed{5.5f};
         // view rotation speed when the mouse is used
         const float mouseSensitivity{0.007f};
-        // view rotaion speed when the gamepad or keyboard is used
+        // view rottaion speed when the gamepad or keyboard is used
         const float viewSensitivity{0.2f};
         // max camera vertical angle
         const float maxCameraAngleUp{lysa::radians(60.0)};

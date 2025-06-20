@@ -1,5 +1,6 @@
 import lysa;
 import scene.view_assets;
+import scene.view_scene;
 import scene.triangles;
 import scene.add_remove;
 import scene.physics;
@@ -31,6 +32,7 @@ namespace app {
     };
 
     lysa::WindowConfiguration windowConfig {
+        // .mode = lysa::WindowMode::WINDOWED_MAXIMIZED,
         .width = 1280,
         .height = 720,
         .mainViewportConfig = {

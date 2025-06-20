@@ -113,6 +113,7 @@ set(MY_TARGET_SRC
         ${SRC_DIR}/scenes/Physics.cpp
         ${SRC_DIR}/scenes/TrianglesScene.cpp
         ${SRC_DIR}/scenes/Vector.cpp
+        ${SRC_DIR}/scenes/ViewScene.cpp
         ${SRC_DIR}/scenes/ViewAssets.cpp)
 set(MY_TARGET_MODULES
         ${SRC_DIR}/Layers.ixx
@@ -123,5 +124,6 @@ set(MY_TARGET_MODULES
         ${SRC_DIR}/scenes/Physics.ixx
         ${SRC_DIR}/scenes/TrianglesScene.ixx
         ${SRC_DIR}/scenes/Vector.ixx
+        ${SRC_DIR}/scenes/ViewScene.ixx
         ${SRC_DIR}/scenes/ViewAssets.ixx)
 build_target(myapp "${MY_TARGET_SRC}" "${MY_TARGET_MODULES}")
