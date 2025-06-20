@@ -178,7 +178,6 @@ namespace app {
             const auto yRot = -interpolatedLookDir.x * 1.0f;
             rotateY(yRot);
             cameraPivot->rotateX(interpolatedLookDir.y * keyboardInvertedAxisY);
-            // cameraPivot->setRotationX(std::clamp(cameraPivot->getRotationX(), maxCameraAngleDown, maxCameraAngleUp));
         }
     }
 
@@ -204,9 +203,7 @@ namespace app {
              cameraCollisionSensor = std::make_shared<lysa::CollisionArea>(
                     std::make_shared<lysa::SphereShape>(attachmentYOffset),
                     WORLD | BODIES,
-                    L"cameraCollisionNode"
-                    );
-            // cameraCollisionSensor->setPosition({0.0, attachmentYOffset, attachmentZOffset / 2.0f - 0.5f});
+                    L"cameraCollisionNode");
             cameraCollisionSensor->connect(on_collision_starts,
                                            [this](void*p){this->onCameraCollision((const Collision *)p);});
             cameraCollisionSensor->connect(on_collision_persists,

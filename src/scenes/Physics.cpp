@@ -16,7 +16,7 @@ namespace app {
         // make the scene node not pauseable
         setProcessMode(lysa::ProcessMode::ALWAYS);
         // add the global environment
-        addChild(std::make_shared<lysa::Environment>(lysa::float4{1.0, 1.0, 1.0, .75f}));
+        addChild(std::make_shared<lysa::Environment>(lysa::float4{1.0, 1.0, 1.0, .05f}));
 
         // add a game node and make it pauseable since the scene can't be paused
         const auto game = std::make_shared<Node>(L"Game");
@@ -25,8 +25,8 @@ namespace app {
 
         // add the Sun
         const auto directionalLight1 = std::make_shared<lysa::DirectionalLight>(lysa::float4{1.0f, 1.0f, 1.0f, 0.8f});
-        directionalLight1->rotateX(lysa::radians(-45.0f));
-        directionalLight1->rotateY(lysa::radians( 45.0f));
+        directionalLight1->rotateX(lysa::radians(-20.0f));
+        directionalLight1->rotateY(lysa::radians(-40.0f));
         directionalLight1->setCastShadows(true);
         game->addChild(directionalLight1);
 
@@ -70,11 +70,11 @@ namespace app {
 
         // create the material to outline the crates in front of the player
         rayCastOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(L"highlight.frag");
-        rayCastOutlineMaterial->setParameter(0, {.4, .4, 0.05, 0.0});
+        rayCastOutlineMaterial->setParameter(0, {.1, .1, 0.02, 0.0});
 
         // // create material to outline the crate colliding with the player
         collisionOutlineMaterial = std::make_shared<lysa::ShaderMaterial>(L"highlight.frag");
-        collisionOutlineMaterial->setParameter(0, {0.0, .2, 0.0, 0.0});
+        collisionOutlineMaterial->setParameter(0, {0.0, .1, 0.0, 0.0});
 
         // build the scene floor node and associated static body
         const auto floorScene = std::make_shared<Node>();
