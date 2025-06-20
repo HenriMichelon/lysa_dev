@@ -16,7 +16,7 @@ namespace app {
         // make the scene node not pauseable
         setProcessMode(lysa::ProcessMode::ALWAYS);
         // add the global environment
-        addChild(std::make_shared<lysa::Environment>(lysa::float4{1.0, 1.0, 1.0, .05f}));
+        addChild(std::make_shared<lysa::Environment>(lysa::float4{1.0, 1.0, 1.0, .01f}));
 
         // add a game node and make it pauseable since the scene can't be paused
         const auto game = std::make_shared<Node>(L"Game");
@@ -24,9 +24,9 @@ namespace app {
         addChild(game);
 
         // add the Sun
-        const auto directionalLight1 = std::make_shared<lysa::DirectionalLight>(lysa::float4{1.0f, 1.0f, 1.0f, 0.8f});
-        directionalLight1->rotateX(lysa::radians(-20.0f));
-        directionalLight1->rotateY(lysa::radians(-40.0f));
+        const auto directionalLight1 = std::make_shared<lysa::DirectionalLight>(lysa::float4{1.0f, 1.0f, 1.0f, 1.0f});
+        directionalLight1->rotateX(lysa::radians(-45.0f));
+        directionalLight1->rotateY(lysa::radians(-45.0f));
         directionalLight1->setCastShadows(true);
         game->addChild(directionalLight1);
 
@@ -50,8 +50,8 @@ namespace app {
 
         // generates crates nodes with random positions
         const auto crateScene = std::make_shared<Node>();
-        lysa::AssetsPack::load(*crateScene, L"app://res/models/crate.assets");
-        const auto &crateModel = crateScene->getChild(L"Crate");
+        lysa::AssetsPack::load(*crateScene, L"app://res/models/sphere.assets");
+        const auto &crateModel = crateScene->getChild(L"Sketchfab_model");
         std::shared_ptr<Crate> first;
         for (int x = 0; x < 4; x++) {
             for (int z = 0; z < 4; z++) {
@@ -124,18 +124,18 @@ namespace app {
                 }
                 // outline the colliding crate
                 const auto meshInstance = collision.object->findFirstChild<lysa::MeshInstance>();
-                if (meshInstance->getSurfaceOverrideMaterial(0) != collisionOutlineMaterial) {
-                    meshInstance->setSurfaceOverrideMaterial(0, collisionOutlineMaterial);
-                }
+                // if (meshInstance->getSurfaceOverrideMaterial(0) != collisionOutlineMaterial) {
+                //     meshInstance->setSurfaceOverrideMaterial(0, collisionOutlineMaterial);
+                // }
                 // save the colliding crate to disable the outline during the next frame
                 newCollisions.insert(meshInstance);
             }
         }
-        for (const auto &meshInstance : currentCollisions) {
-            if (!newCollisions.contains(meshInstance) && meshInstance->getSurfaceOverrideMaterial(0) == collisionOutlineMaterial) {
-                meshInstance->setSurfaceOverrideMaterial(0, nullptr);
-            }
-        }
+        // for (const auto &meshInstance : currentCollisions) {
+        //     if (!newCollisions.contains(meshInstance) && meshInstance->getSurfaceOverrideMaterial(0) == collisionOutlineMaterial) {
+        //         meshInstance->setSurfaceOverrideMaterial(0, nullptr);
+        //     }
+        // }
         currentCollisions = newCollisions;
     }
 
@@ -147,12 +147,12 @@ namespace app {
             const auto& collider = rayCast->getCollider();
             const auto& meshInstance = collider->findFirstChild<lysa::MeshInstance>();
             if (meshInstance != previousSelection) {
-                if (meshInstance->getSurfaceOverrideMaterial(0) == nullptr) {
-                    meshInstance->setSurfaceOverrideMaterial(0, rayCastOutlineMaterial);
-                }
-                if (previousSelection && (previousSelection->getSurfaceOverrideMaterial(0) == rayCastOutlineMaterial)) {
-                    previousSelection->setSurfaceOverrideMaterial(0, nullptr);
-                }
+                // if (meshInstance->getSurfaceOverrideMaterial(0) == nullptr) {
+                //     meshInstance->setSurfaceOverrideMaterial(0, rayCastOutlineMaterial);
+                // }
+                // if (previousSelection && (previousSelection->getSurfaceOverrideMaterial(0) == rayCastOutlineMaterial)) {
+                //     previousSelection->setSurfaceOverrideMaterial(0, nullptr);
+                // }
                 previousSelection = meshInstance;
             }
         } else if (previousSelection != nullptr) {

@@ -208,7 +208,7 @@ namespace app {
                                            [this](void*p){this->onCameraCollision((const Collision *)p);});
             cameraCollisionSensor->connect(on_collision_persists,
                                            [this](void*p){this->onCameraCollision((const Collision *)p);});
-            cameraAttachment->addChild(cameraCollisionSensor);
+            // cameraAttachment->addChild(cameraCollisionSensor);
         }
 
         // create the pivot used to rotate the camera
