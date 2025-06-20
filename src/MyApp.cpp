@@ -39,7 +39,7 @@ namespace app {
                 // .maxVertexPerFrame = 30000000
             },
             .debugConfig = {
-                .enabled = false,
+                .enabled = true,
                 .displayAtStartup = false,
                 .depthTestEnable = true,
                 .drawCoordinateSystem = false,
@@ -73,7 +73,7 @@ namespace app {
     class MyWindow : public lysa::Window {
     public:
         MyWindow() :
-        Window{windowConfig, std::make_shared<ViewAssetsScene>()} {
+        Window{windowConfig, std::make_shared<PhysicsMainScene>()} {
             // viewport2Config.viewport.x = (getExtent().width - viewport2Config.viewport.width)/2;
             // viewport2 = addViewport(std::make_shared<lysa::Viewport>(viewport2Config));
             // viewport2->setRootNode(std::make_shared<ViewAssetsScene>());

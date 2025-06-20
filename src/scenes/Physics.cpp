@@ -182,7 +182,7 @@ namespace app {
         //     infoBox->hide();
         // }
 
-        if (lysa::Input::isKeyJustPressed(lysa::KEY_F1)) {
+        if (lysa::Input::isKeyJustPressed(lysa::KEY_F1) && getViewport()->getDebugRenderer()) {
             getViewport()->setDisplayDebug(!getViewport()->getDisplayDebug());
         }
     }
